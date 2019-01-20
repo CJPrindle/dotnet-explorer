@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "A GUI for the dotnet CLI ",
   "main": "./bin/main.js",
+  "productName": "dotNet Explorer",
   "deprecated": false,
   "scripts": {
     "dev": "electron . --debug",
-    "start": "electron .",
+    "start": "start.bat",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
