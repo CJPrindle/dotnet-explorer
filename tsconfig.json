@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "lib": [ "es7", "dom" ],
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "./bin",
+    "pretty": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2018"
+  },
+    "exclude": [
+        "node_modules"
+    ]
+}

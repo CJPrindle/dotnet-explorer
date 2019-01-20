@@ -2,8 +2,11 @@
   "name": "dotnet-explorer",
   "version": "1.0.0",
   "description": "A GUI for the dotnet CLI ",
-  "main": "main.js",
+  "main": "./bin/main.js",
+  "deprecated": false,
   "scripts": {
+    "dev": "electron . --debug",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -11,6 +14,28 @@
     "GUI",
     "electron"
   ],
-  "author": "Christopher Prindle",
-  "license": "MIT"
+  "author": {
+    "name": "Christopher Prindle",
+    "email": "cjprindle@vivaldi.net",
+    "url": "http://www.github.com/CJPrindle"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/CJPrindle/dotnet-explorer#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CJPrindle/dotnet-explorer.git"
+  },
+  "dependencies": {
+    "electron-json-storage": "^4.1.5",
+    "electron-shortcut-normalizer": "^1.0.0",
+    "glob": "^7.1.3",
+    "highlight.js": "^9.13.1"
+  },
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "electron": "^4.0.1",
+    "electron-packager": "^13.0.1",
+    "electron-winstaller": "^2.7.0",
+    "typescript": "^3.2.4"
+  }
 }
