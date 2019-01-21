@@ -1,18 +1,29 @@
-import {app, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {app, globalShortcut, Menu, MenuItemConstructorOptions, shell} from 'electron';
 
 export class ApplicationMenus {
 
-  public static getMenuTemplate(): Menu {
-
+  public static getMainTemplate(): Menu {
     const menuTemplate: MenuItemConstructorOptions[]  = [
       {
         label: "File",
         submenu: [
-          {label: 'New Project'},
+          {
+            label: 'New Project',
+            accelerator: 'Ctrl+N',
+            registerAccelerator: true
+          },
           {type: 'separator'},
-          {label: 'Open Template'},
+          {
+            label: 'Open Template',
+            accelerator: 'Ctrl+O',
+            registerAccelerator: true
+          },
           {type: 'separator'},
-          {label: 'Exit'},
+          {
+            label: 'Exit',
+            click: _ => app.quit(),
+            accelerator: 'Ctrl+F4'
+          },
         ]
       },
       {
@@ -56,11 +67,25 @@ export class ApplicationMenus {
           },
           {label: 'License'},
           {type: 'separator'},
-          {label: `About ${app.getName()}`},
+          {
+            label: `About ${app.getName()}`,
+            role: 'about'
+
+          },
         ]
       },
     ];
 
     return Menu.buildFromTemplate(menuTemplate);
+  }
+
+  public static registerShortCuts(): void {
+    globalShortcut.register('Ctrl+N', _ => {
+      console.log('Creating new project...');
+    });
+
+    globalShortcut.register('Ctrl+O', _ => {
+      console.log('Opening existing project...');
+    });
   }
 }

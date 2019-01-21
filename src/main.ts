@@ -1,6 +1,6 @@
 import {app, BrowserWindow, ipcMain, Menu} from 'electron';
 import * as path from 'path';
-import * as countdown from './scripts/countdown';
+import * as loadDotNetTemplates from './scripts/dotNetProcess';
 import {ApplicationMenus} from './menus';
 
 let mainWindow;
@@ -14,9 +14,9 @@ app.on('ready', _ => {
     }
   });
 
-  Menu.setApplicationMenu(ApplicationMenus.getMenuTemplate());
-
   mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
+  Menu.setApplicationMenu(ApplicationMenus.getMainTemplate());
+  ApplicationMenus.registerShortCuts();
 
   mainWindow.on('closed', _ => {
     console.log('mainWindow Closed');
@@ -25,10 +25,11 @@ app.on('ready', _ => {
 });
 
 // Handle the 'countdown-start event sent from a renderer process
-ipcMain.on('countdown-start', _ => {
-  countdown(count => {
+ipcMain.on('dotnet-templates-load', _ => {
+  loadDotNetTemplates();
+});
 
-    // Broadcast the 'countdown' to any renderer process listening for it
-    mainWindow.webContents.send('countdown', count);
-  });
+ipcMain.on('dotnet-templates-loaded', (args) => {
+  // Broadcast the 'dotnet-templates-load' event to any renderer process listening for it
+  mainWindow.webContents.send('dotnet-templates-loaded', args);
 });

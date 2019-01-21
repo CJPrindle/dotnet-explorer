@@ -1,13 +1,10 @@
-//const electron = require('electron');
-//const ipc = electron.ipcRenderer;
-import { ipcRenderer } from 'electron';
+const electron = require('electron');
+const ipc = electron.ipcRenderer;
 
-document.getElementById('start').addEventListener('click', _ => {
-  // Broadcast the 'countdown-start' event to the Main process
-  ipcRenderer.send('countdown-start')
-});
+// Broadcast the 'dotnetCli-load' event to the Main process
+ipc.send('dotnet-templates-load');
 
-// Handle the 'countdown' event broadcast from the Main process
-ipcRenderer.on('countdown', (evt, count) => {
-  document.getElementById('count').innerHTML = count;
+// Handle the 'dotnet-templates-load' event broadcast from the Main process
+ipc.on('dotnet-templates-loaded', (evt, args) => {
+  document.getElementById('dotnetProjects').innerHTML = args;
 });
