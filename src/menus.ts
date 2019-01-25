@@ -1,4 +1,4 @@
-import {app, globalShortcut, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {app, globalShortcut, Menu, MenuItemConstructorOptions, shell} from 'electron'
 
 export class ApplicationMenus {
 
@@ -74,18 +74,18 @@ export class ApplicationMenus {
           },
         ]
       },
-    ];
+    ]
 
-    return Menu.buildFromTemplate(menuTemplate);
+    return Menu.buildFromTemplate(menuTemplate)
   }
 
   public static registerShortCuts(): void {
     globalShortcut.register('Ctrl+N', _ => {
-      console.log('Creating new project...');
-    });
+      console.log('Creating new project...')
+    })
 
     globalShortcut.register('Ctrl+O', _ => {
-      console.log('Opening existing project...');
-    });
+      console.log('Opening existing project...')
+    })
   }
 }

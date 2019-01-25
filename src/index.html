@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-  <div class="container">
-    <h1 class="title">Countdown!</h1>
-  </div>
-  <div class="templateList" id="dotnetProjects"></div>
-  <button class="btn" id="start">Start</button>
-  <script>require('./scripts/renderer')</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <head>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+      <link rel="stylesheet" href="photon/css/photon.min.css" />
+    </head>
+  </head>
+  <body>
+    <div class="window">
+      <header class="toolbar toolbar-header">
+        <h1 class="title">Header</h1>
+      </header>
+      <div class="window-content">
+        <div class="pane-group">
+          <div class="pane-sm sidebar">...</div>
+          <div class="pane">
+            <div id="dotnetProjects" title="Header"></div>
+          </div>
+        </div>
+      </div>
+      <footer class="toolbar toolbar-footer">
+        <h1 class="title">Footer</h1>
+      </footer>
+    </div>
+    <script>
+      require('./scripts/renderer');
+    </script>
+  </body>
 </html>
