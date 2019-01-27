@@ -2,30 +2,104 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <head>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
       <link rel="stylesheet" href="photon/css/photon.min.css" />
+      <link rel="stylesheet" href="css/main.css" />
     </head>
   </head>
+
   <body>
     <div class="window">
       <header class="toolbar toolbar-header">
-        <h1 class="title">Header</h1>
+        <div class="toolbar-actions">
+          <button class="btn btn-mini  btn-default"><i class="fas fa-plus"></i> <span>New Project</span></button>
+          <button class="btn btn-default"><i class="fas fa-folder-open"></i> <span>Open</span></button>
+
+          <div class="btn btn-group">
+            <button class="btn btn-default">
+              <span class="icon icon-folder"></span>
+            </button>
+            <button class="btn btn-default active"><span class="icon icon-cloud"></span></button>
+            <button class="btn btn-default"><span class="icon icon-popup"></span></button>
+            <button class="btn btn-default"><span class="icon icon-shuffle"></span></button>
+            <button class="btn btn-default"><i class="fas fa-igloo"></i></button>
+          </div>
+
+          <button class="btn btn-default"><span class="icon icon-home icon-text"></span> Filters</button>
+
+          <button class="btn btn-default btn-dropdown"><span class="icon icon-megaphone"></span></button>
+        </div>
       </header>
       <div class="window-content">
         <div class="pane-group">
-          <div class="pane-sm sidebar">...</div>
+          <div class="pane-sm sidebar">
+            <header class="toolbar toolbar-header">
+              <h6 class="title">Project Templates</h6>
+            </header>
+
+            <nav class="nav-group">
+              <h5 class="nav-group-title">Common</h5>
+              <a class="nav-group-item"> <i class="fas fa-cogs fa-2x"></i> <span>Class Library</span> </a>
+              <a class="nav-group-item"> <i class="fas fa-terminal fa-2x"></i> <span>Console Application</span> </a>
+            </nav>
+
+            <nav class="nav-group">
+              <h5 class="nav-group-title">Web</h5>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>ASP.NET Core Empty</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>ASP.NET Core Web API</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>ASP.NET Core Web App (Model-View-Controller)</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>ASP.NET Core Web App</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                 <span>ASP.NET Core with Angular</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>ASP.NET Core React.js</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>ASP.NET Core React.js and Redux</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>MVC ViewImports</span>
+              </a>
+              <a class="nav-group-item">
+                <img src="assets/core-web.png" />
+                <span>MVC ViewStart</span>
+              </a>
+            </nav>
+          </div>
           <div class="pane">
-            <div id="dotnetProjects" title="Header"></div>
+            <div id="dotnetProjects">
+
+            </div>
           </div>
         </div>
       </div>
+
       <footer class="toolbar toolbar-footer">
         <h1 class="title">Footer</h1>
       </footer>
     </div>
     <script>
-      require('./scripts/renderer');
+      require('./client-scripts/renderer-events.js')
+      require('./client-scripts/dom.js');
     </script>
   </body>
 </html>
