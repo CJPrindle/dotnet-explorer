@@ -1,0 +1,105 @@
+%font-smoothing
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+%h-properties
+  color: #444
+  font-weight: bold
+  margin: 5px
+
+body
+  @extend %font-smoothing
+  background-color: $default-bg
+  bottom: 0
+  color: $default-fg
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-feature-settings: 'liga'
+  left: 0
+  margin: 0
+  overflow: hidden
+  padding: 0
+  position: fixed
+  right: 0
+  text-rendering: optimizeLegibility
+  top: 0
+
+button,
+input,
+optgroup,
+select,
+textarea
+  color: inherit
+  font: inherit
+  margin: 0
+
+h1
+  @extend %h-properties
+  font-size: 2em
+
+h2
+  @extend %h-properties
+  font-size: 1.8em
+
+h3
+  @extend %h-properties
+  font-size: 1.66em
+
+h4
+  @extend %h-properties
+  font-size: 1.5em
+
+h5
+  @extend %h-properties
+  font-size: 1.33em
+
+h6
+  @extend %h-properties
+  font-size: 1.25em
+
+span
+  padding: 3px
+
+fieldset
+  border-radius: 4px
+
+.main-container
+  align-content: stretch
+  bottom: 0
+  box-sizing: border-box
+  display: grid
+  grid-template-rows: auto 25px
+  justify-content: stretch
+  left: 0
+  position: fixed
+  right: 0
+  top: 0
+
+.main-content
+  bottom: 25px
+  display: grid
+  grid-template-columns: 48px auto
+  left: 0
+  overflow: hidden
+  position: relative
+  right: 0
+  top: 0
+
+.main-content-left
+  padding: 0
+  position: relative
+
+.main-content-right
+  position: relative
+
+.main-footer
+  position: relative
+
+.container
+  bottom: 0
+  left: 0
+  margin: 0
+  overflow-x: hidden
+  overflow-y: auto
+  position: absolute
+  right: 0
+  top: 0

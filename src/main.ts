@@ -2,12 +2,12 @@ import {app, BrowserWindow, ipcMain, Menu} from 'electron'
 import * as path from 'path'
 
 import {ApplicationMenus} from './classes/menus'
-import {dotNetCLI} from './classes/dot-net-cli'
-import {dotNetTemplate} from './models/dot-net-template'
+import {DotNetCLI} from './classes/dotnet-cli'
+import {DotNetTemplate} from './models/dotnet-template'
 
 let mainWindow;
 let projectTemplatesJson = '';
-const projectTemplatesArray: dotNetTemplate[] = [];
+const projectTemplatesArray: DotNetTemplate[] = [];
 
 app.on('ready', _ => {
   mainWindow = new BrowserWindow({
@@ -27,11 +27,9 @@ app.on('ready', _ => {
   });
 });
 
-// Handle the 'countdown-start event sent from a renderer process
-ipcMain.on('dotnet-templates-load', _ => {
-  const cli = new dotNetCLI()
+ipcMain.on('new-project-load', _ => {
+  const cli = new DotNetCLI()
   cli.getTemplateList()
- //loadDotNetTemplates();
 });
 
 ipcMain.on('dotnet-templates-loaded', data => {
@@ -52,7 +50,7 @@ ipcMain.on('dotnet-templates-loaded', data => {
   for (let x = templateStart; x < lines.length; x++) {
     if (lines[x].length > 0) {
       // Parse the line and add to the template array
-      projectTemplatesArray.push(new dotNetTemplate());
+      projectTemplatesArray.push(new DotNetTemplate());
       projectTemplatesArray[idx].type = lines[x].substr(0, 50).trim();
       projectTemplatesArray[idx].shortName = lines[x].substr(50, 18).trim();
       projectTemplatesArray[idx].languages = lines[x].substr(70, 17).trim();
@@ -63,5 +61,5 @@ ipcMain.on('dotnet-templates-loaded', data => {
 
   projectTemplatesJson = JSON.stringify(projectTemplatesArray); // Serialize to Json
   mainWindow.webContents.send('dotnet-templates-loaded', projectTemplatesJson); // Broadcast event
-  mainWindow.webContents.send('element-created', 'dotnetProjects');
+  //mainWindow.webContents.send('element-create', 'dotnetProjects');
 });

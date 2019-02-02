@@ -1,0 +1,25 @@
+=button-hover-transform($property)
+  -webkit-transform: $property
+  -ms-transform: $property
+  transform: $property
+
+=button-hover-filter($property)
+  -webkit-filter: $property
+  filter: brightness($property)
+
+%button-center
+  display: grid
+  margin: auto
+  padding: 0
+  position: relative
+
+%flat-button
+  background-color: transparent
+  border: none
+  outline: none
+
+%flat-button-hover
+  background-color: rgba(0, 0, 0, .1)
+  +button-hover-transform(scale(1.15, 1.15))
+  +button-hover-filter(brightness(133%))
+  cursor: pointer

@@ -1,6 +1,14 @@
 
-export class domElements {
-  createHtmlElement(name, parentElement, attributes, innerText): HTMLElement {
+import {HtmlAttribute} from '../models/html-attribute';
+
+export class DomElements {
+  createHtmlElement(
+    name: string,
+    parentID: string,
+    attributes: HtmlAttribute[],
+    classNames: string,
+    innerText: string): HTMLElement {
+
     //Create the new Html element
     const newElement = document.createElement(name)
 
@@ -11,14 +19,19 @@ export class domElements {
       })
     }
 
+    // Set the class name
+    if (classNames != null) {
+      newElement.className = classNames
+    }
+
     // Set innerText
     if (innerText !== null) {
       newElement.innerText = innerText
     }
 
     // Assign to parent element
-    if (parentElement !== null) {
-      const parentEl = document.getElementById(parentElement)
+    if (parentID !== null) {
+      const parentEl = document.getElementById(parentID)
       parentEl.appendChild(newElement)
     }
 

@@ -1,4 +1,4 @@
-export class htmlAttribute {
+export class HtmlAttribute {
   name: string
   value: string
 }

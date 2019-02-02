@@ -1,4 +1,4 @@
-export class dotNetTemplate {
+export class DotNetTemplate {
   type: string
   shortName: string
   languages: string[]
