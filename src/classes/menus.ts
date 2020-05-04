@@ -80,11 +80,11 @@ export class ApplicationMenus {
   }
 
   public static registerShortCuts(): void {
-    globalShortcut.register('Ctrl+N', _ => {
+    globalShortcut.register('Ctrl+N', (_: any) => {
       console.log('Creating new project...')
     })
 
-    globalShortcut.register('Ctrl+O', _ => {
+    globalShortcut.register('Ctrl+O', (_: any) => {
       console.log('Opening existing project...')
     })
   }

@@ -2,19 +2,25 @@ import {app, BrowserWindow, ipcMain, Menu} from 'electron'
 import * as path from 'path'
 
 import {ApplicationMenus} from './classes/menus'
-import {DotNetCLI} from './classes/dotnet-cli'
-import {DotNetTemplate} from './models/dotnet-template'
+import {DotnetCLI} from './classes/dotnetCLI'
+import {DotNetTemplate} from './models/dotnetTemplate'
 
-let mainWindow;
-let projectTemplatesJson = '';
-const projectTemplatesArray: DotNetTemplate[] = [];
+let mainWindow: BrowserWindow;
+const dotNetTemplates: DotNetTemplate[] = [];
+
+function uniqueElements(value: any, index: number, self: string | any[]) {
+  return self.indexOf(value) === index
+}
 
 app.on('ready', _ => {
   mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    height: 768,
+    width: 1366,
     webPreferences: {
-      webSecurity: false
+      nodeIntegration: true,
+      webSecurity: false,
+      devTools: true,
+      webgl: true
     }
   });
 
@@ -22,44 +28,61 @@ app.on('ready', _ => {
   Menu.setApplicationMenu(ApplicationMenus.getMainTemplate());
   ApplicationMenus.registerShortCuts();
 
+  mainWindow.webContents.send('element-create', 'dotnetProjects');
+
   mainWindow.on('closed', _ => {
     mainWindow = null;
   });
 });
 
-ipcMain.on('new-project-load', _ => {
-  const cli = new DotNetCLI()
-  cli.getTemplateList()
+ipcMain.on('new-project-load', (_: any) => {
+  const cli = new DotnetCLI()
+  cli.getProjectTemplates()
 });
 
-ipcMain.on('dotnet-templates-loaded', data => {
-  const lines = data.split('\n'); // Convert dotnet CLI stdout to an array of text lines
-  let templateStart = 0; // Line where project template table starts
-
-  // Find where the project template list begins
+ipcMain.on('dotnet-projects-loaded', (data: string) => {
+  const lines = data.split('\n') // Convert dotnet CLI stdout to an array of text lines
+  let templatesTable: string[] = []
+  let templateLanguages: string[] = []
+  let templateTags: string[] = ['test']
+  
+  // Find where the project template table begins
   for (let x = 0; x < lines.length; x++) {
-    // Look for header line
     if (lines[x].startsWith('Templates')) {
-      templateStart = x + 2;
+      templatesTable = lines.slice(x + 2, lines.length - 1);
       break;
     }
   }
 
-  let idx = 0; // Loop counter
+  // Find the starting position of each column using the 'Console Application' template as a guide
+  const consoleTemplate = templatesTable.find(template => template.substr(0, 19) == 'Console Application');
+  const shortNameStart = consoleTemplate.indexOf('console') // Short name column position
+  const languagesStart = consoleTemplate.indexOf('[C#]') // Languages column position
+  const tagsStart = consoleTemplate.indexOf('Common') // Tags columns position
+  
+  templatesTable.sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())).forEach(templateLine => {
+    let dotnetTemplate = new DotNetTemplate()
 
-  for (let x = templateStart; x < lines.length; x++) {
-    if (lines[x].length > 0) {
-      // Parse the line and add to the template array
-      projectTemplatesArray.push(new DotNetTemplate());
-      projectTemplatesArray[idx].type = lines[x].substr(0, 50).trim();
-      projectTemplatesArray[idx].shortName = lines[x].substr(50, 18).trim();
-      projectTemplatesArray[idx].languages = lines[x].substr(70, 17).trim();
-      projectTemplatesArray[idx].tags = lines[x].substr(87).trim();
-      idx++;
+    dotnetTemplate.name = templateLine.substr(0, shortNameStart-1).trim()
+    dotnetTemplate.shortName = templateLine.substr(shortNameStart, (languagesStart-shortNameStart)).trim()
+    
+    let languages: string = templateLine.substr(languagesStart, (tagsStart-languagesStart)).trim()
+    if(languages.length > 0) {
+      dotnetTemplate.languages = languages.replace('[', '').replace(']', '').split(",")
+      templateLanguages = templateLanguages.concat(dotnetTemplate.languages)
     }
-  }
 
-  projectTemplatesJson = JSON.stringify(projectTemplatesArray); // Serialize to Json
-  mainWindow.webContents.send('dotnet-templates-loaded', projectTemplatesJson); // Broadcast event
-  //mainWindow.webContents.send('element-create', 'dotnetProjects');
+    let tags: string = templateLine.substr(tagsStart, (templateLine.length - tagsStart)).trim()
+    if(tags.length > 0) {
+      dotnetTemplate.tags = tags.split("/")
+      templateTags = templateTags.concat(tags.split("/"))
+    }
+
+    dotNetTemplates.push(dotnetTemplate)
+  })
+  
+  console.log('templateLanguages', templateLanguages.filter(uniqueElements))
+  console.log('templateTags', templateTags.filter(uniqueElements).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())))
+
+  mainWindow.webContents.send('dotnet-projects-loaded', JSON.stringify(dotNetTemplates))
 });

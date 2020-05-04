@@ -12,4 +12,4 @@ cp -Tr ./src/models ./bin/models
 cp -Tr ./src/photon ./bin/photon
 
 sass ./sass/main.sass ./bin/stylesheets/main.css
-tsc && electron .
+tsc && electron --debug .
