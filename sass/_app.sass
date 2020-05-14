@@ -6,6 +6,11 @@
   color: #444
   font-weight: bold
   margin: 5px
+
+%border-properties
+  border-color: $default-brd
+  border-width: 4px
+  border-style: solid
   
 * 
   font-size: 10pt
@@ -13,9 +18,10 @@
 body
   @extend %font-smoothing
   background-color: $default-bg
+  box-sizing: border-box
   bottom: 0
   color: $default-fg
-  font-family: HelveticaNueue, Avenir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: Daytona, Avenir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
   font-feature-settings: 'liga'
   left: 0
   margin: 0
@@ -34,6 +40,14 @@ textarea
   color: inherit
   font: inherit
   margin: 0
+
+fieldset
+  border-width: .5px
+  position: relative
+  
+  legend
+    font-size: 1.2em 
+    font-weight: 600 
 
 h1
   @extend %h-properties
@@ -65,6 +79,21 @@ span
 fieldset
   border-radius: 4px
 
+.align-center
+  text-align: center
+  
+.align-right
+  text-align: right
+
+.divider
+    background-color: transparent
+    border-right: .5px $highlight-fg solid
+    margin: 0 5px
+    width: 0
+
+.inline-flex
+  display: inline-flex !important
+
 .main-container
   align-content: stretch
   bottom: 0
@@ -79,8 +108,9 @@ fieldset
 
 .main-content
   bottom: 25px
+  box-sizing: border-box
   display: grid
-  grid-template-columns: 48px auto
+  grid-template-columns: 50px auto
   left: 0
   overflow: hidden
   position: relative

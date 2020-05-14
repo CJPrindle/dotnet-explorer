@@ -1,47 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-
-    <head>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
-        <link rel="stylesheet" href="stylesheets/main.css" />
-    </head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+  <link rel="stylesheet" href="stylesheets/main.css" />
 </head>
-
 <body>
   <div class="main-container">
     <div class="main-content">
       <div class="main-content-left">
-          <div class="container">
-              <div class="toolbar-vertical">
-                <button id="templatesCommon" class="flat-button"
-                        title="Common Projects">
-                  <img src="./assets/projects/project-netcore-32~dark.png" />
-                </button>
-                <button id="templatesWeb" class="flat-button">
-                  <img src="./assets/projects/project-aspnet-32~dark.png" />
-                </button>
-                <button id="templatesTest" class="flat-button">
-                  <img src="./assets/projects/project-netcore-test-32~dark.png" />
-                </button>
-                <button id="templatesConfig" class="flat-button">
-                  <img src="./assets/projects/file-source-32~dark.png" />
-                </button>
-                <button id="templatesMisc" class="flat-button">
-                  <img src="./assets/projects/solution-32~dark.png" />
-                </button>
-              </div>
+        <div class="container">
+          <div class="toolbar-vertical">
+            <button id="templatesCommon" class="flat-button" title="Common Projects">
+              <img src="./assets/projects/project-netcore-32~dark.png" />
+            </button>
+            <button id="templatesWeb" class="flat-button">
+              <img src="./assets/projects/project-aspnet-32~dark.png" />
+            </button>
+            <button id="templatesTest" class="flat-button">
+              <img src="./assets/projects/project-netcore-test-32~dark.png" />
+            </button>
+            <button id="templatesConfig" class="flat-button">
+              <img src="./assets/projects/file-source-32~dark.png" />
+            </button>
+            <button id="templatesMisc" class="flat-button">
+              <img src="./assets/projects/solution-32~dark.png" />
+            </button>
           </div>
+        </div>
       </div>
       <div class="main-content-right">
         <div class="container">
-          <div id="mainTree" class="main-tree">
-            
+          <div class="project-list">
+            <ul id="projectList" ></ul>
           </div>
-          <div class="content">
-            <div id="dotnetProjects">dotnetProjects</div>
+          <div id="projectDetails" class="project-details">
+            <div class="template-title-bar">
+              <img id="templateTitleIcon" class="template-title-icon" src="assets/templates/angular.png" />
+              <div class="template-properties">
+                <div id="templateTitleName" class="template-name">Template Name</div>
+                <div>
+                  <span id="templateTitleShortName" class="template-shortname">ShortName</span>
+                  <span class="divider"></span>
+                  <span id="templateTitleChipContainer"></span>
+                </div>
+                <br />
+                <div>
+                  <button>Add to Favorites</button>
+                </div>
+              </div>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <fieldset>
+              <legend>New Project From Template</legend>
+              <div class="project-create-container">
+                <div class="align-right">
+                  <label for="tbProjectName">Name:</label>
+                </div>
+                <div>
+                  <input idr="tbProjectName">
+                </div>
+                <div class="align-right">
+                  <label for="tbProjectLocation">Location:</label>
+                </div>
+                <div>
+                  <input idr="tbProjecLocation">
+                </div>
+                <div class="align-right">
+                  <label for="tbProjectLanguage">Language:</label>
+                </div>
+                <div>
+                  <div>
+                    <select id="ddProjectLanguages" style="width: 120px" size="1">
+                      <option>C#</option>
+                      <option>F#</option>
+                      <option>VB</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inline-flex">
+                  <input id="cbProjectForce" type="checkbox">
+                  <label for="cbProjectForce" 
+                         title="Forces content to be generated even if it would change existing files">
+                         &nbsp;Force
+                  </label>
+                </div>
+                <div class="inline-flex">
+                  <input id="cbProjectDryRun" type="checkbox">
+                  <label for="cbProjectDryRun"
+                         title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
+                         &nbsp;Dry Run
+                  </label>
+                </div>
+              </div>
+              <div style="text-align: center;">
+                <button class="button-project-create">CREATE!</button>
+              </div>
+            </fieldset>
           </div>
         </div>
       </div>
@@ -54,10 +111,10 @@
       </div>
     </div>
   </div>
-    <script>
+  <script>
     require('./client-scripts/rendererEvents.js')
     require('./client-scripts/documentModel.js');
-    </script>
+  </script>
 </body>
 
 </html>

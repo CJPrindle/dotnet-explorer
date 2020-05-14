@@ -11,17 +11,17 @@ export class DocumentModel {
    * @function
    * @summary Creates a HTML element
    * @description Creates a HTML element and inserts it into the DOM under the specified parent
-   * @param {string} name - The element type name
+   * @param {string} tagName - The element type name
    * @param {string} parentID - the id attribute of the parent element
    * @param attributes - An array of element attributes
    * @param classNames - CSS class names
    * @param innerText - The text value of the element  
   */
-  createHtmlElement (name: string, parentID: string, attributes: HtmlAttribute[],
+  createHtmlElement (tagName: string, parentID: string, attributes: HtmlAttribute[],
     classNames: string, innerText: string): HTMLElement {
     
     //Create the new Html element
-    const newElement = document.createElement(name)
+    const newElement = document.createElement(tagName)
 
     // Set the attributes
     if (attributes !== null) {

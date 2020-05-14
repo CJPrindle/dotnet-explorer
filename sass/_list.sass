@@ -1,0 +1,31 @@
+=li-hover-filter($property)
+  -webkit-filter: $property
+  filter: brightness($property)
+
+.project-list
+  background-color: $tree-bg
+  bottom: 0
+  box-sizing: border-box
+  left: 0
+  overflow: auto
+  padding: 2px 10px
+  position: absolute
+  scroll-behavior: smooth
+  text-overflow: ellipsis
+  top: 0
+  width: 250px
+  word-wrap: none
+
+  ul
+    cursor: default
+    list-style: none
+    margin: 2px
+    padding: 0
+
+    li
+      line-height: 20px
+
+    li:hover
+      +li-hover-filter(brightness(133%))
+      text-shadow: 0.5px 0.5px 5px $focus-brd
+      

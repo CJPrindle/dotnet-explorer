@@ -16,18 +16,50 @@ function uniqueElements(value, index, self) {
 
 ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
   const dom = new DocumentModel()
-  const mainTree = document.getElementById('mainTree')
+  const projectList = document.getElementById('projectList')
+  const projectDetails = document.getElementById('projectDetails')
   const dotNetTemplates: DotNetTemplate[] = JSON.parse(jsonData)
+  let projectItem: HTMLElement
 
   dotNetTemplates.forEach(dotnetTemplate => {
-    mainTree.appendChild(
-      dom.createHtmlElement(
-        'div',
-        'mainTree',
-        null,
-        null,
-        dotnetTemplate.name
-      ))
+    projectItem = dom.createHtmlElement(
+      'li',
+      'projectList',
+      null,
+      'list-group-header',
+      dotnetTemplate.name
+    )
+
+    projectItem.addEventListener('click', (ev) => {
+      const templateTitleIcon = <HTMLImageElement>document.getElementById('templateTitleIcon')
+      templateTitleIcon.src = `./assets/templates/${dotnetTemplate.icon}.png`
+      const templateTitleName = <HTMLDivElement>document.getElementById('templateTitleName')
+      templateTitleName.innerText = dotnetTemplate.name
+      const templateTitleShortName = <HTMLDivElement>document.getElementById('templateTitleShortName')
+      templateTitleShortName.innerText = dotnetTemplate.shortName
+      const templateTitleChipContainer = <HTMLSpanElement>document.getElementById('templateTitleChipContainer')
+      templateTitleChipContainer.innerHTML = ''
+
+      // Create chips for languages
+      dotnetTemplate.languages.forEach(language => {
+        dom.createHtmlElement(
+          'span',
+          'templateTitleChipContainer',
+          null,
+          'chip',
+          language)
+      });
+
+      // Create chips for tags
+      dotnetTemplate.tags.forEach(tag => {
+        dom.createHtmlElement(
+          'span',
+          'templateTitleChipContainer',
+          null,
+          'chip',
+          tag)
+      });
+    })
   })
 })
 

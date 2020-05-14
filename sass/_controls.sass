@@ -1,0 +1,33 @@
+%control-appearance
+  background-color: $control-bg
+  border-color: $control-brd
+  border-radius: 4px
+  border-width: 2px
+  color: $control-fg
+  font-size: 1.2em
+  font-weight: 600
+
+input, select
+  @extend %control-appearance
+
+input:focus, select:focus
+  outline: 2px $focus-brd solid
+
+input[type=checkbox]
+  height: 18px
+  width: 18px
+
+input:hover, select:hover
+  box-shadow: 0.5px 0.5px 8px 0.25px $focus-brd
+
+select
+  -moz-appearance: none
+  -webkit-appearance: none
+  appearance: none
+  background-image: url("../assets/arrow-down.png")
+  background-position: 98%
+  background-repeat: no-repeat
+
+select::-ms-expand 
+  display: none // remove default arrow in IE 10 and 11
+      

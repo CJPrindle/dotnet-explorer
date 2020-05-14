@@ -27,11 +27,19 @@ export class DotNetTemplate {
   */
   languages: string[]
 
-    /**
+  /**
   * @summary Tags property
   * @description One or more descriptive values for the template
   * @type {string[]}
   * @member
   */
   tags: string[]
+
+  /**
+  * @summary Icon property
+  * @description Default image for the template 
+  * @type {string[]}
+  * @member
+  */
+  icon: string
 }

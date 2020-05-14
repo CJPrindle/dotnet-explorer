@@ -1,9 +1,10 @@
 .toolbar-vertical
   background-color: $toolbar-bg
   bottom: 0
+  box-sizing: border-box
   left: 0
   margin: auto
-  overflow: auto hidden
+  overflow: hidden
   padding: 10px 0 0 0
   position: absolute
   right: 0
@@ -12,11 +13,15 @@
   button
     @extend %button-center
     @extend %flat-button
+    display: grid
     height: 32px
     margin-bottom: 20px
     margin-left: auto
     margin-right: auto
     width: 32px
 
+  button:focus
+    @extend %flat-button-focus
+    
   button:hover
     @extend %flat-button-hover

@@ -1,9 +1,10 @@
-import {app, BrowserWindow, ipcMain, Menu} from 'electron'
+import { app, BrowserWindow, ipcMain, Menu } from 'electron'
 import * as path from 'path'
 
-import {ApplicationMenus} from './classes/menus'
-import {DotnetCLI} from './classes/dotnetCLI'
-import {DotNetTemplate} from './models/dotnetTemplate'
+import { ApplicationMenus } from './classes/menus'
+import { DotnetCLI } from './classes/dotnetCLI'
+import { DotNetTemplate } from './models/dotnetTemplate'
+import { Utilities } from './classes/utilities'
 
 let mainWindow: BrowserWindow;
 const dotNetTemplates: DotNetTemplate[] = [];
@@ -28,7 +29,7 @@ app.on('ready', _ => {
   Menu.setApplicationMenu(ApplicationMenus.getMainTemplate());
   ApplicationMenus.registerShortCuts();
 
-  mainWindow.webContents.send('element-create', 'dotnetProjects');
+  //mainWindow.webContents.send('element-create', 'dotnetProjects');
 
   mainWindow.on('closed', _ => {
     mainWindow = null;
@@ -41,11 +42,11 @@ ipcMain.on('new-project-load', (_: any) => {
 });
 
 ipcMain.on('dotnet-projects-loaded', (data: string) => {
-  const lines = data.split('\n') // Convert dotnet CLI stdout to an array of text lines
+  const lines = data.split('\n') // Convert dotnet CLI output to an array of text lines
   let templatesTable: string[] = []
   let templateLanguages: string[] = []
-  let templateTags: string[] = ['test']
-  
+  let templateTags: string[] = []
+
   // Find where the project template table begins
   for (let x = 0; x < lines.length; x++) {
     if (lines[x].startsWith('Templates')) {
@@ -59,28 +60,29 @@ ipcMain.on('dotnet-projects-loaded', (data: string) => {
   const shortNameStart = consoleTemplate.indexOf('console') // Short name column position
   const languagesStart = consoleTemplate.indexOf('[C#]') // Languages column position
   const tagsStart = consoleTemplate.indexOf('Common') // Tags columns position
-  
+
   templatesTable.sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())).forEach(templateLine => {
     let dotnetTemplate = new DotNetTemplate()
 
-    dotnetTemplate.name = templateLine.substr(0, shortNameStart-1).trim()
-    dotnetTemplate.shortName = templateLine.substr(shortNameStart, (languagesStart-shortNameStart)).trim()
-    
-    let languages: string = templateLine.substr(languagesStart, (tagsStart-languagesStart)).trim()
-    if(languages.length > 0) {
+    dotnetTemplate.name = templateLine.substr(0, shortNameStart - 1).trim()
+    dotnetTemplate.shortName = templateLine.substr(shortNameStart, (languagesStart - shortNameStart)).trim()
+
+    let languages: string = templateLine.substr(languagesStart, (tagsStart - languagesStart)).trim()
+    if (languages.length > 0) {
       dotnetTemplate.languages = languages.replace('[', '').replace(']', '').split(",")
       templateLanguages = templateLanguages.concat(dotnetTemplate.languages)
     }
 
     let tags: string = templateLine.substr(tagsStart, (templateLine.length - tagsStart)).trim()
-    if(tags.length > 0) {
+    if (tags.length > 0) {
       dotnetTemplate.tags = tags.split("/")
       templateTags = templateTags.concat(tags.split("/"))
     }
 
+    dotnetTemplate.icon = Utilities.getTemplateIcon(dotnetTemplate.tags)
     dotNetTemplates.push(dotnetTemplate)
   })
-  
+
   console.log('templateLanguages', templateLanguages.filter(uniqueElements))
   console.log('templateTags', templateTags.filter(uniqueElements).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())))
 

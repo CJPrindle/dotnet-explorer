@@ -1,15 +1,13 @@
 =button-hover-transform($property)
-  -webkit-transform: $property
   -ms-transform: $property
+  -webkit-transform: $property
   transform: $property
 
 =button-hover-filter($property)
   -webkit-filter: $property
-  filter: brightness($property)
+  filter: brightness($property) drop-shadow($property)
 
 %button-center
-  display: grid
-  margin: auto
   padding: 0
   position: relative
 
@@ -19,7 +17,32 @@
   outline: none
 
 %flat-button-hover
-  background-color: rgba(0, 0, 0, .1)
+  +button-hover-filter(brightness(133%) drop-shadow(.5px .5px 2px #00bfff))
   +button-hover-transform(scale(1.15, 1.15))
-  +button-hover-filter(brightness(133%))
+  background-color: rgba(0, 0, 0, .1)
   cursor: pointer
+  
+%flat-button-focus
+  outline: none
+
+%button-hover
+  +button-hover-filter(brightness(150%))
+
+button
+  @extend %button-center
+  background-color: $button-bg
+  border-radius: 3px
+  border-bottom: 1px solid $button-brd-tl
+  border-left: 1px solid $button-brd-tl
+  border-right: 1px solid $button-brd-tl
+  border-top: 1px solid $button-brd-tl
+  color: $highlight-fg
+  font-size: .8em
+  font-weight: 400
+  padding: 1px 3px
+
+button:focus
+  outline: 1px $focus-brd solid
+
+button:hover
+  @extend %button-hover
