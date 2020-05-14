@@ -12,8 +12,8 @@
   },
   "keywords": [
     "dotnet",
-    "GUI",
-    "electron"
+    "electron",
+    "utility"
   ],
   "author": {
     "name": "Christopher Prindle",

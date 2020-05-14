@@ -1,9 +1,9 @@
-import {app, globalShortcut, Menu, MenuItemConstructorOptions, shell} from 'electron'
+import { app, globalShortcut, Menu, MenuItemConstructorOptions, shell } from 'electron'
 
 export class ApplicationMenus {
 
   public static getMainTemplate(): Menu {
-    const menuTemplate: MenuItemConstructorOptions[]  = [
+    const menuTemplate: MenuItemConstructorOptions[] = [
       {
         label: "File",
         submenu: [
@@ -12,13 +12,13 @@ export class ApplicationMenus {
             accelerator: 'Ctrl+N',
             registerAccelerator: true
           },
-          {type: 'separator'},
+          { type: 'separator' },
           {
             label: 'Open Template',
             accelerator: 'Ctrl+O',
             registerAccelerator: true
           },
-          {type: 'separator'},
+          { type: 'separator' },
           {
             label: 'Exit',
             click: _ => app.quit(),
@@ -29,12 +29,12 @@ export class ApplicationMenus {
       {
         label: 'Edit',
         submenu: [
-          {role: 'cut'},
-          {role: 'copy'},
-          {type: 'separator'},
-          {role: 'paste'},
-          {role: 'delete'},
-          {role: 'selectall'}
+          { role: 'cut' },
+          { role: 'copy' },
+          { type: 'separator' },
+          { role: 'paste' },
+          { role: 'delete' },
+          { role: 'selectall' }
         ]
       },
       {
@@ -63,10 +63,10 @@ export class ApplicationMenus {
         submenu: [
           {
             label: 'Documentation',
-            click () { shell.openExternal('https://www.github.com/CJPrindle/dotnet-explorer') }
+            click() { shell.openExternal('https://www.github.com/CJPrindle/dotnet-explorer') }
           },
-          {label: 'License'},
-          {type: 'separator'},
+          { label: 'License' },
+          { type: 'separator' },
           {
             label: `About ${app.getName()}`,
             role: 'about'

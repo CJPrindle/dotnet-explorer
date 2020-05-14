@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
   <link rel="stylesheet" href="stylesheets/main.css" />
 </head>
+
 <body>
   <div class="main-container">
     <div class="main-content">
@@ -32,7 +34,7 @@
       <div class="main-content-right">
         <div class="container">
           <div class="project-list">
-            <ul id="projectList" ></ul>
+            <ul id="projectList"></ul>
           </div>
           <div id="projectDetails" class="project-details">
             <div class="template-title-bar">
@@ -46,7 +48,7 @@
                 </div>
                 <br />
                 <div>
-                  <button>Add to Favorites</button>
+                  <button id="projectAddToFavorites">Add to Favorites</button>
                 </div>
               </div>
             </div>
@@ -54,7 +56,7 @@
             <hr />
             <br />
             <fieldset>
-              <legend>New Project From Template</legend>
+              <legend id="projectLegend"></legend>
               <div class="project-create-container">
                 <div class="align-right">
                   <label for="tbProjectName">Name:</label>
@@ -71,34 +73,61 @@
                 <div class="align-right">
                   <label for="tbProjectLanguage">Language:</label>
                 </div>
-                <div>
-                  <div>
-                    <select id="ddProjectLanguages" style="width: 120px" size="1">
-                      <option>C#</option>
-                      <option>F#</option>
-                      <option>VB</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="inline-flex">
+                <div class="items-center">
+                  <select id="ddProjectLanguages" style="width: 120px" size="1">
+                    <option>C#</option>
+                    <option>F#</option>
+                    <option>VB</option>
+                  </select>
+
                   <input id="cbProjectForce" type="checkbox">
-                  <label for="cbProjectForce" 
-                         title="Forces content to be generated even if it would change existing files">
-                         &nbsp;Force
+                  <label for="cbProjectForce"
+                    title="Forces content to be generated even if it would change existing files">
+                    &nbsp;Force&nbsp;
                   </label>
-                </div>
-                <div class="inline-flex">
+
                   <input id="cbProjectDryRun" type="checkbox">
                   <label for="cbProjectDryRun"
-                         title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
-                         &nbsp;Dry Run
+                    title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
+                    &nbsp;Dry Run&nbsp;
+                  </label>
+                </div>
+                <div>
+
+                </div>
+                <div class="items-center">
+                  <input id="cbOpenVSCode" type="checkbox">
+                  <label for="cbOpenVSCode">
+                    &nbsp;Open VS Code on completion
                   </label>
                 </div>
               </div>
-              <div style="text-align: center;">
-                <button class="button-project-create">CREATE!</button>
+              <div class="align-center">
+                <button class="project-create">CREATE!</button>
               </div>
+              <button class="project-clear" title="Clear all form values">Clear Data</button>
             </fieldset>
+
+            <div class="console">
+              <pre>
+                <output>webpack: Compiled successfully.
+                webpack: Compiling...
+                Hash: 33d8c38093d5e8261eac
+                Version: webpack 3.11.0
+                Time: 1337ms
+                                               Asset       Size  Chunks                    Chunk Names
+                                          project.js    12.3 MB       0  [emitted]  [big]  project
+                                        dashboard.js    6.36 MB       1  [emitted]  [big]  dashboard
+                                         organize.js    5.29 MB       2  [emitted]  [big]  organize
+                                          proPens.js    4.92 MB       3  [emitted]  [big]  proPens
+                0.81c79b4db476a98d272f.hot-update.js    87.4 kB       0  [emitted]         project
+                1.81c79b4db476a98d272f.hot-update.js    7.94 kB       1  [emitted]         dashboard
+                81c79b4db476a98d272f.hot-update.json   52 bytes          [emitted]
+                                       manifest.json  272 bytes          [emitted]
+                [./app/javascript/common/components/Overlay.js] ./app/javascript/common/components/Overlay.js 2.42 kB {0} {1} [built]
+                </output>
+              </pre>
+            </div>
           </div>
         </div>
       </div>

@@ -42,10 +42,13 @@ textarea
   margin: 0
 
 fieldset
+  background-color: $fieldset-bg
+  border-color: $highlight-fg
   border-width: .5px
   position: relative
   
   legend
+    color: $highlight-fg
     font-size: 1.2em 
     font-weight: 600 
 
@@ -91,8 +94,9 @@ fieldset
     margin: 0 5px
     width: 0
 
-.inline-flex
+.items-center
   display: inline-flex !important
+  align-items: center
 
 .main-container
   align-content: stretch

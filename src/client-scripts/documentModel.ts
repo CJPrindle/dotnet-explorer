@@ -13,9 +13,9 @@ export class DocumentModel {
    * @description Creates a HTML element and inserts it into the DOM under the specified parent
    * @param {string} tagName - The element type name
    * @param {string} parentID - the id attribute of the parent element
-   * @param attributes - An array of element attributes
-   * @param classNames - CSS class names
-   * @param innerText - The text value of the element  
+   * @param {HtmlAttribute[]} attributes - An array of element attributes
+   * @param {string} classNames - CSS class names
+   * @param {string} innerText - The text value of the element  
   */
   createHtmlElement (tagName: string, parentID: string, attributes: HtmlAttribute[],
     classNames: string, innerText: string): HTMLElement {
