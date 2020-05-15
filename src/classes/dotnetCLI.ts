@@ -1,4 +1,4 @@
-import {ipcMain} from 'electron'
+import {ipcMain, ipcRenderer} from 'electron'
 import {spawn} from 'child_process'
 import {StringDecoder} from 'string_decoder'
 

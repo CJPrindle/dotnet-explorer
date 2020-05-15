@@ -3,6 +3,7 @@ import { DocumentModel } from './documentModel'
 import { HtmlAttribute } from '../models/htmlAttribute'
 import { DotNetTemplate } from '../models/dotnetTemplate'
 
+const dom = new DocumentModel()
 let templateTags: string[] = []
 let templateLanguages: string[] = []
 
@@ -15,14 +16,19 @@ window.addEventListener('DOMContentLoaded', _ => {
 })
 
 // Returns unique values from array
-function uniqueElements(value, index, self) {
+function uniqueElements(value: any, index: any, self: string | any[]) {
   return self.indexOf(value) === index
 }
+
+
+ipcRenderer.on('dotnetCLI-data-output', (_: any, data: string) => {
+  const consoleOutput = <HTMLPreElement>document.getElementById('consoleOutput')
+  consoleOutput.innerText = data
+})
 
 // Called after the template list from the dotnet CLI has been parsed.
 // Creates LI elements for each template and adds them to the main list
 ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
-  const dom = new DocumentModel()
   const dotNetTemplates: DotNetTemplate[] = JSON.parse(jsonData)
   let htmlAttributes: HtmlAttribute[] = []
   let projectItem: HTMLElement
@@ -42,7 +48,6 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
 
     // Capture the LI click event
     projectItem.addEventListener('click', (ev: Event) => {
-      
       // Set focus on the selected LI
       (<HTMLLIElement>ev.target).focus()
 
@@ -56,7 +61,7 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
       const templateTitleChipContainer = <HTMLSpanElement>document.getElementById('templateTitleChipContainer')
       templateTitleChipContainer.innerHTML = ''
       const projectLegend = <HTMLLegendElement>document.getElementById('projectLegend')
-      projectLegend.innerText = `Create Project Using Template: ${dotnetTemplate.name}`
+      projectLegend.innerText = `Project Using : ${dotnetTemplate.name}`
 
       // Create chips for each language the template supports
       dotnetTemplate.languages.forEach(language => {

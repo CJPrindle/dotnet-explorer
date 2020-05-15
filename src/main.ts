@@ -40,7 +40,7 @@ app.on('ready', _ => {
 })
 
 ipcMain.on('open-vs-code', (_: any) => {
-  const vsCode = spawn('cmd.exe', ['/C', 'C:\\local\\VS Code\\Code.exe'])
+  const vsCode = spawn('C:\\local\\VS Code\\Code.exe', ['../markdown-quickview'])
 
   vsCode.stdout.on('data', (data) => {
     console.log(data.toString())
@@ -61,6 +61,8 @@ ipcMain.on('dotnet-projects-loaded', (data: string) => {
   let templatesTable: string[] = []
   let templateLanguages: string[] = []
   let templateTags: string[] = []
+
+  mainWindow.webContents.send('dotnetCLI-data-output', data)
 
   // Find where the project template table begins
   for (let x = 0; x < lines.length; x++) {

@@ -27,6 +27,38 @@
         position: absolute
         right: 2px
     
+    .console-container
+        background-color: $console-bg
+        border-top: .5px solid $default-brd
+        bottom: 0
+        color: #ccc
+        left: 0
+        margin: 0
+        overflow: auto auto
+        padding: 10px
+        position: absolute
+        right: 0
+        top: 68%
+
+        .console-titlebar
+            background-color: $statusbar-bg
+            font-weight: bold
+            height: 24px
+            left: 0
+            padding: 0 2px
+            position: absolute
+            right: 0
+            top: 1px
+
+            select
+                background-color: lighten($statusbar-bg, 10) 
+                border: 1px $button-brd-tl solid
+                color: $default-fg
+                font-size: 1em
+                margin-top: 1px
+                padding: 0 2px
+                width: 175px
+
     .project-create
         box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.5)
         cursor: pointer
@@ -42,7 +74,7 @@
     .project-clear
         bottom: 15px
         position: absolute
-        right: 15px 
+        left: 15px 
 
     .project-create-container
         align-content: center

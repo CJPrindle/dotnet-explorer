@@ -95,6 +95,7 @@
                 <div>
 
                 </div>
+
                 <div class="items-center">
                   <input id="cbOpenVSCode" type="checkbox">
                   <label for="cbOpenVSCode">
@@ -102,32 +103,27 @@
                   </label>
                 </div>
               </div>
+
               <div class="align-center">
                 <button class="project-create">CREATE!</button>
               </div>
-              <button class="project-clear" title="Clear all form values">Clear Data</button>
+              <button class="button-alert project-clear" title="Clear all form values">Clear Data</button>
             </fieldset>
 
-            <div class="console">
-              <pre>
-                <output>webpack: Compiled successfully.
-                webpack: Compiling...
-                Hash: 33d8c38093d5e8261eac
-                Version: webpack 3.11.0
-                Time: 1337ms
-                                               Asset       Size  Chunks                    Chunk Names
-                                          project.js    12.3 MB       0  [emitted]  [big]  project
-                                        dashboard.js    6.36 MB       1  [emitted]  [big]  dashboard
-                                         organize.js    5.29 MB       2  [emitted]  [big]  organize
-                                          proPens.js    4.92 MB       3  [emitted]  [big]  proPens
-                0.81c79b4db476a98d272f.hot-update.js    87.4 kB       0  [emitted]         project
-                1.81c79b4db476a98d272f.hot-update.js    7.94 kB       1  [emitted]         dashboard
-                81c79b4db476a98d272f.hot-update.json   52 bytes          [emitted]
-                                       manifest.json  272 bytes          [emitted]
-                [./app/javascript/common/components/Overlay.js] ./app/javascript/common/components/Overlay.js 2.42 kB {0} {1} [built]
-                </output>
-              </pre>
+            <div class="console-container">
+              <div class="console-titlebar">
+                <label>dotnet CLI output</label>
+
+                <label for="consoleEvents">Events:&nbsp;</label>
+                <select id="consoleEvents" size="1">
+                    <option>dotnet new --list</option>
+                </select>
+              </div>
+              <div class="console">
+                <pre id="consoleOutput"></pre>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
