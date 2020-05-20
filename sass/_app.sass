@@ -6,21 +6,16 @@
   color: #444
   font-weight: bold
   margin: 5px
-
-%border-properties
-  border-color: $default-brd
-  border-width: 4px
-  border-style: solid
-  
+ 
 * 
   font-size: 10pt
   
 body
   @extend %font-smoothing
-  background-color: $default-bg
+  background-color: $application-background
   box-sizing: border-box
   bottom: 0
-  color: $default-fg
+  color: $application-foreground
   font-family: Daytona, Avenir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
   font-feature-settings: 'liga'
   left: 0
@@ -31,7 +26,11 @@ body
   right: 0
   text-rendering: optimizeLegibility
   top: 0
+  user-select: none
 
+a 
+  color: $text-link-color
+  
 button,
 input,
 optgroup,
@@ -42,13 +41,15 @@ textarea
   margin: 0
 
 fieldset
-  background-color: $fieldset-bg
-  border-color: $highlight-fg
-  border-width: .5px
+  background-color: $fieldset-background
+  border-top: 1px solid $fieldset-border-light
+  border-left: 1px solid $fieldset-border-light
+  border-bottom: 1px solid $fieldset-border-dark
+  border-right: 1px solid $fieldset-border-dark
   position: relative
   
   legend
-    color: $highlight-fg
+    color: $legend-foreground
     font-size: 1.2em 
     font-weight: 600 
 
@@ -76,8 +77,9 @@ h6
   @extend %h-properties
   font-size: 1.25em
 
-span
-  padding: 3px
+hr
+  border: none
+  border-top: 1px $horizontal-rule-border solid
 
 fieldset
   border-radius: 4px
@@ -140,3 +142,7 @@ fieldset
   position: absolute
   right: 0
   top: 0
+
+::selection
+  background: $application-selection
+  text-shadow: none

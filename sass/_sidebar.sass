@@ -2,8 +2,10 @@
   -webkit-filter: $property
   filter: brightness($property)
 
-.project-list
-  background-color: $tree-bg
+.sidebar
+  background-color: $sidebar-background
+  border: .5px solid $sidebar-border
+  border-left-color: transparent
   bottom: 0
   box-sizing: border-box
   left: 0
@@ -23,15 +25,19 @@
     padding: 0
 
     li
+      border: .5px solid transparent
+      color: $sidebar-foreground
       line-height: 20px
       padding: 2px 5px 0 5px
     
     li:focus
-      background-color: $chip-brd
-      color: aliceblue
-      outline: 1px outset aliceblue
+      background-color: $sidebar-focus-background
+      color: $sidebar-focus-foreground
+      border: .5px solid $sidebar-focus-border
+      border-radius: 5px
+      outline: none
 
     li:hover
       +li-hover-filter(brightness(133%))
-      text-shadow: 0.5px 0.5px 5px $focus-brd
+      text-shadow: 0.25px 0.25px 2px $focus-brd
       

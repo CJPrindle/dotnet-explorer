@@ -1,9 +1,9 @@
 %control-appearance
-  background-color: $control-bg
-  border-color: $control-brd
+  background-color: $input-background
+  border-color: $input-border
   border-radius: 4px
   border-width: 2px
-  color: $control-fg
+  color: $input-foreground
   font-size: 1.2em
   font-weight: 600
 
@@ -11,14 +11,14 @@ input, select
   @extend %control-appearance
 
 input:focus, select:focus
-  outline: 2px $focus-brd solid
+  outline: 2px $input-focus-border solid
 
 input[type=checkbox]
   height: 18px
   width: 18px
 
 input:hover, select:hover
-  box-shadow: 0.5px 0.5px 8px 0.25px $focus-brd
+  box-shadow: 0.5px 0.5px 8px 0.25px $input-focus-border
 
 select
   -moz-appearance: none

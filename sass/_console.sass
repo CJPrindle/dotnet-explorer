@@ -1,20 +1,22 @@
-::selection 
-  background: $select-bg
-  text-shadow: none
-
 .console 
-  background-color: $console-bg
+  background-color: $console-background
+  border: .5px solid $console-border
   bottom: 0
-  color: $console-fg
+  color: $console-foreground
   left: 0
   margin: 0
   overflow: auto auto
+  padding: 10px
   position: absolute
   right: 0
   top: 24px
-
-pre 
-  font-family: 'Source Code Pro', monospace
-  font-size: 1.1em
-  margin: 0
-  padding: 0
+  
+  // ::selection
+  //   background: $console-selection
+    
+  pre 
+    font-family: Cousine, 'Source Code Pro', monospace
+    font-size: 1em
+    margin: 0
+    user-select: text
+  

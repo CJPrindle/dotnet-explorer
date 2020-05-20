@@ -6,7 +6,7 @@ import { spawn } from 'child_process'
 import { Utilities } from './classes/utilities'
 import * as path from 'path'
 
-// The Electron host window
+ // The Electron host window
 let mainWindow: BrowserWindow
 // Holds the project templates obtained from the dotnet CLI
 const dotNetTemplates: DotNetTemplate[] = []
@@ -37,6 +37,12 @@ app.on('ready', _ => {
   mainWindow.on('closed', _ => {
     mainWindow = null
   })
+})
+
+ipcMain.on('console-theme-change', (obj: HTMLSelectElement) => {
+  //const consoleThemesDropdown = <HTMLSelectElement>ev.srcElement
+
+  
 })
 
 ipcMain.on('open-vs-code', (_: any) => {

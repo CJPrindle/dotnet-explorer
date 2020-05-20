@@ -26,20 +26,30 @@
   outline: none
 
 %button-hover
-  +button-hover-filter(brightness(150%))
+  +button-hover-filter(brightness(110%))
+  background-color: $button-hover-background
 
 .button-alert
-  background-color: $button-alert-bg !important
+  background-color: $button-alert-background !important
+
+
+.button-create-project 
+    box-shadow: 1px 1px 3px 3px transparentize($button-shadow, .5)
+    cursor: pointer
+    font-size: 1.1em
+    font-weight: 600
+    margin: 5px 10px
+    padding: 5px 10px
 
 button
   @extend %button-center
-  background-color: $button-bg
+  background-color: $button-background
   border-radius: 3px
   border-bottom: 1px solid $button-brd-tl
   border-left: 1px solid $button-brd-tl
   border-right: 1px solid $button-brd-tl
   border-top: 1px solid $button-brd-tl
-  color: $highlight-fg
+  color: $button-foreground
   font-size: .8em
   font-weight: 400
   padding: 1px 3px
@@ -49,3 +59,5 @@ button:focus
 
 button:hover
   @extend %button-hover
+
+

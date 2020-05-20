@@ -1,145 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
-  <link rel="stylesheet" href="stylesheets/main.css" />
-</head>
+  <body>
+    <div class="main-container">
+      <div class="main-content">
+        <div class="main-content-left">
+          <div class="container">
+            <div class="activitybar">
+              <button id="templatesCommon" class="flat-button" title="Common Projects">
+                <img src="./assets/projects/project-netcore-32~dark.png" />
+              </button>
+              <button id="templatesWeb" class="flat-button">
+                <img src="./assets/projects/project-aspnet-32~dark.png" />
+              </button>
+              <button id="templatesTest" class="flat-button">
+                <img src="./assets/projects/project-netcore-test-32~dark.png" />
+              </button>
+              <button id="templatesConfig" class="flat-button">
+                <img src="./assets/projects/file-source-32~dark.png" />
+              </button>
+              <button id="templatesMisc" class="flat-button">
+                <img src="./assets/projects/solution-32~dark.png" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="main-content-right">
+          <div class="container">
+            <div class="sidebar">
+              <ul id="sidebarItems"></ul>
+            </div>
+            <div id="editor" class="editor">
+              <div class="template-info-container">
+                <img id="templateTitleIcon" class="template-title-icon" src="assets/templates/default.png" />
+                <div class="template-properties">
+                  <div id="templateTitleName" class="template-name">Template Name</div>
+                  <div>
+                    <span id="templateTitleShortName" class="template-shortname">ShortName</span>
+                    <span class="divider"></span>
+                    <span id="templateTitleChipContainer"></span>
+                  </div>
+                  <br />
+                  <div>
+                    <button id="projectAddToFavorites">Add to Favorites</button>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <hr />
+              <br />
+              <fieldset>
+                <legend id="projectLegend">New Project</legend>
+                <div class="project-create-container">
+                  <!-- Row 1 / Col 1 -->
+                  <div class="align-right">
+                    <label for="tbProjectName">Name:</label>
+                  </div>
+                  <!-- Row 1 / Col 2 -->
+                  <div>
+                    <input id="tbProjectName" />
+                  </div>
+                  <!-- Row 2 / Col 1 -->
+                  <div class="align-right">
+                    <label for="tbProjectLocation">Location:</label>
+                  </div>
+                  <!-- Row 2 / Col 2 -->
+                  <div>
+                    <input id="tbProjectLocation" />
+                  </div>
+                    <!-- Row 3 / Col 1 -->
+                  <div class="align-right">
+                    <label for="ddProjectLanguages">Language:</label>
+                  </div>
+                  <!-- Row 3 / Col 2 -->
+                  <div class="items-center">
+                    <select id="ddProjectLanguages" style="width: 120px;" size="1">
+                      <option>C#</option>
+                      <option>F#</option>
+                      <option>VB</option>
+                    </select>
 
-<body>
-  <div class="main-container">
-    <div class="main-content">
-      <div class="main-content-left">
-        <div class="container">
-          <div class="toolbar-vertical">
-            <button id="templatesCommon" class="flat-button" title="Common Projects">
-              <img src="./assets/projects/project-netcore-32~dark.png" />
-            </button>
-            <button id="templatesWeb" class="flat-button">
-              <img src="./assets/projects/project-aspnet-32~dark.png" />
-            </button>
-            <button id="templatesTest" class="flat-button">
-              <img src="./assets/projects/project-netcore-test-32~dark.png" />
-            </button>
-            <button id="templatesConfig" class="flat-button">
-              <img src="./assets/projects/file-source-32~dark.png" />
-            </button>
-            <button id="templatesMisc" class="flat-button">
-              <img src="./assets/projects/solution-32~dark.png" />
-            </button>
+                    <input id="cbProjectForce" type="checkbox" />
+                    <label
+                      for="cbProjectForce"
+                      title="Forces content to be generated even if it would change existing files">
+                      &nbsp;Force&nbsp;
+                    </label>
+
+                    <input id="cbProjectDryRun" type="checkbox" />
+                    <label
+                      for="cbProjectDryRun"
+                      title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
+                      &nbsp;Dry Run&nbsp;
+                    </label>
+
+                    <input id="cbOpenVSCode" type="checkbox" />
+                    <label for="cbOpenVSCode">&nbsp;Open VS Code on completion</label>
+                  </div>
+                </div>
+
+                <div class="align-center">
+                  <button class="button-create-project">CREATE!</button>
+                </div>
+                <a href="#" class="project-clear" title="Clear all form values">Clear Data</a>
+              </fieldset>
+
+              <div class="console-container">
+                <div class="console-titlebar">
+                  <label class="command-label">Command Viewer</label>
+
+                  <div class="console-events-container">
+                    <label for="consoleEvents">Events:&nbsp;</label>
+                    <select id="consoleEvents" size="1">
+                      <option>dotnet new --list</option>
+                    </select>
+                  </div>
+                  
+                  <div class="console-themes-container">
+                    <label for="consoleEvents">Themes:&nbsp;</label>
+                    <select id="consoleThemes" size="1">
+                      <option value="default">[Default]</option>
+                      <option value="grass">Grass</option>
+                      <option value="homebrew">Homebrew</option>
+                      <option value="manpages">Man Page</option>
+                      <option value="novel">Novel</option>
+                      <option value="ocean">Ocean</option>
+                      <option value="pro">Pro</option>
+                      <option value="redsands">Red Sands</option>
+                      <option value="silverspring">Silver Spring</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="console" class="console">
+                  <pre id="consoleOutput"></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="main-content-right">
+      <div class="main-footer">
         <div class="container">
-          <div class="project-list">
-            <ul id="projectList"></ul>
-          </div>
-          <div id="projectDetails" class="project-details">
-            <div class="template-title-bar">
-              <img id="templateTitleIcon" class="template-title-icon" src="assets/templates/angular.png" />
-              <div class="template-properties">
-                <div id="templateTitleName" class="template-name">Template Name</div>
-                <div>
-                  <span id="templateTitleShortName" class="template-shortname">ShortName</span>
-                  <span class="divider"></span>
-                  <span id="templateTitleChipContainer"></span>
-                </div>
-                <br />
-                <div>
-                  <button id="projectAddToFavorites">Add to Favorites</button>
-                </div>
-              </div>
-            </div>
-            <br />
-            <hr />
-            <br />
-            <fieldset>
-              <legend id="projectLegend"></legend>
-              <div class="project-create-container">
-                <div class="align-right">
-                  <label for="tbProjectName">Name:</label>
-                </div>
-                <div>
-                  <input idr="tbProjectName">
-                </div>
-                <div class="align-right">
-                  <label for="tbProjectLocation">Location:</label>
-                </div>
-                <div>
-                  <input idr="tbProjecLocation">
-                </div>
-                <div class="align-right">
-                  <label for="tbProjectLanguage">Language:</label>
-                </div>
-                <div class="items-center">
-                  <select id="ddProjectLanguages" style="width: 120px" size="1">
-                    <option>C#</option>
-                    <option>F#</option>
-                    <option>VB</option>
-                  </select>
-
-                  <input id="cbProjectForce" type="checkbox">
-                  <label for="cbProjectForce"
-                    title="Forces content to be generated even if it would change existing files">
-                    &nbsp;Force&nbsp;
-                  </label>
-
-                  <input id="cbProjectDryRun" type="checkbox">
-                  <label for="cbProjectDryRun"
-                    title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
-                    &nbsp;Dry Run&nbsp;
-                  </label>
-                </div>
-                <div>
-
-                </div>
-
-                <div class="items-center">
-                  <input id="cbOpenVSCode" type="checkbox">
-                  <label for="cbOpenVSCode">
-                    &nbsp;Open VS Code on completion
-                  </label>
-                </div>
-              </div>
-
-              <div class="align-center">
-                <button class="project-create">CREATE!</button>
-              </div>
-              <button class="button-alert project-clear" title="Clear all form values">Clear Data</button>
-            </fieldset>
-
-            <div class="console-container">
-              <div class="console-titlebar">
-                <label>dotnet CLI output</label>
-
-                <label for="consoleEvents">Events:&nbsp;</label>
-                <select id="consoleEvents" size="1">
-                    <option>dotnet new --list</option>
-                </select>
-              </div>
-              <div class="console">
-                <pre id="consoleOutput"></pre>
-              </div>
-            </div>
-
+          <div class="statusbar">
+            <span>Welcome to .Net Commander!</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="main-footer">
-      <div class="container">
-        <div class="statusbar">
-          <span>Welcome to .Net Commander!</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    require('./client-scripts/rendererEvents.js')
-    require('./client-scripts/documentModel.js');
-  </script>
-</body>
-
+    <script>
+      require('./client-scripts/rendererEvents.js')
+      require('./client-scripts/documentModel.js')
+    </script>
+  </body>
 </html>
