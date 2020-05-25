@@ -8,9 +8,9 @@ import * as path from 'path'
 
  // The Electron host window
 let mainWindow: BrowserWindow
+
 // Holds the project templates obtained from the dotnet CLI
 const dotNetTemplates: DotNetTemplate[] = []
-
 
 function uniqueElements(value: any, index: number, self: string | any[]) {
   return self.indexOf(value) === index
@@ -39,23 +39,9 @@ app.on('ready', _ => {
   })
 })
 
-ipcMain.on('console-theme-change', (obj: HTMLSelectElement) => {
-  //const consoleThemesDropdown = <HTMLSelectElement>ev.srcElement
-
-  
-})
-
-ipcMain.on('open-vs-code', (_: any) => {
-  const vsCode = spawn('C:\\local\\VS Code\\Code.exe', ['../markdown-quickview'])
-
-  vsCode.stdout.on('data', (data) => {
-    console.log(data.toString())
-  })
-  
-  vsCode.stderr.on('data', (data) => {
-    console.log(data.toString())
-  })
-})
+// ipcMain.on('open-vs-code', (_: any) => {
+//   const vsCode = spawn('C:\\local\\VS Code\\Code.exe', ['../markdown-quickview'])
+// })
 
 ipcMain.on('new-project-load', (_: any) => {
   const cli = new DotnetCLI()

@@ -1,22 +1,39 @@
-import { ipcRenderer } from 'electron'
 import { DocumentModel } from './documentModel'
-import { HtmlAttribute } from '../models/htmlAttribute'
 import { DotNetTemplate } from '../models/dotnetTemplate'
+import { HtmlAttribute } from '../models/htmlAttribute'
 import { HtmlNamedColors } from '../client-scripts/htmlNamedColors'
+import { ipcRenderer, OpenDialogOptions, remote} from 'electron'
 
 const dom = new DocumentModel()
-let templateTags: string[] = []
 let templateLanguages: string[] = []
+let templateTags: string[] = []
 
 window.addEventListener('DOMContentLoaded', _ => {
-  document.getElementById('projectAddToFavorites').addEventListener('click', (ev) => {
-    ipcRenderer.send('open-vs-code')
+  const btnOpenFolder = <HTMLButtonElement>document.getElementById('btnOpenFolder')
+  const clearNewProjectForm = <HTMLAnchorElement>document.getElementById('clearNewProjectForm')
+  const consoleThemes = <HTMLSelectElement>document.getElementById('consoleThemes')
+  const newProjectForm = <HTMLFormElement>document.getElementById('newProjectForm')
+  const outputConsole = <HTMLDivElement>document.getElementById('console')
+  const projectLocation = <HTMLInputElement>document.getElementById('tbProjectLocation')
+  
+  clearNewProjectForm.addEventListener('click', () => {
+    newProjectForm.reset()
   })
 
-  const consoleThemes = <HTMLSelectElement>document.getElementById('consoleThemes')
-  const outputConsole = <HTMLDivElement>document.getElementById('console')
-  consoleThemes.addEventListener('change', (ev) => {
+  let options: OpenDialogOptions = {
+    title: "Set Project Location",
+    properties: ["openDirectory"],
+    message: "Select the location of your project",
+  }
+  
+  btnOpenFolder.addEventListener('click', () => {
+    remote.dialog.showOpenDialog(options, (folderPaths: string[]) => {
+      alert('tyt')
+      projectLocation.value = 'Yrs: ' + folderPaths[0]
+    })
+  })
 
+  consoleThemes.addEventListener('change', () => {
     switch(consoleThemes.value) {
       case "grass":
         outputConsole.style.backgroundColor = "DarkGreen"
@@ -39,7 +56,6 @@ window.addEventListener('DOMContentLoaded', _ => {
         outputConsole.style.backgroundColor = ""
         outputConsole.style.color = ""
     }
-    //ipcRenderer.send('console-theme-change', <HTMLSelectElement>ev.srcElement)
   })
 
   ipcRenderer.send('new-project-load')
@@ -50,6 +66,9 @@ function uniqueElements(value: any, index: any, self: string | any[]) {
   return self.indexOf(value) === index
 }
 
+ipcRenderer.on('project-path-save', (_: any) => {
+
+})
 
 ipcRenderer.on('dotnetCLI-data-output', (_: any, data: string) => {
   const consoleOutput = <HTMLPreElement>document.getElementById('consoleOutput')
@@ -65,7 +84,7 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
 
   // Add a tabIndex attribute to allow the LI to receive focus
   htmlAttributes.push(new HtmlAttribute('tabIndex', 0))
-  
+
   // Create LI elements for each template
   dotNetTemplates.forEach(dotnetTemplate => {
     sidebarItem = dom.createHtmlElement(
@@ -90,8 +109,10 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
       templateTitleShortName.innerText = dotnetTemplate.shortName
       const templateTitleChipContainer = <HTMLSpanElement>document.getElementById('templateTitleChipContainer')
       templateTitleChipContainer.innerHTML = ''
+
+      // Set new project fieldset
       const projectLegend = <HTMLLegendElement>document.getElementById('projectLegend')
-      projectLegend.innerText = `Project Using : ${dotnetTemplate.name}`
+      projectLegend.innerText = `Project Using Template: ${dotnetTemplate.name}`
 
       //Load color themes into console header
       htmlAttributes = []
@@ -106,8 +127,6 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
           '',
           color)
       })
-        
-      
 
       // Create chips for each language the template supports
       dotnetTemplate.languages.forEach(language => {

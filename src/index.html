@@ -46,8 +46,9 @@
                     <span id="templateTitleChipContainer"></span>
                   </div>
                   <br />
-                  <div>
-                    <button id="projectAddToFavorites">Add to Favorites</button>
+                  <div class="items-center" title="Mark this template as a favorite">
+                    <input id="cbFavorite" type="checkbox" />
+                    <label for="cbFavorite">Favorite</label>
                   </div>
                 </div>
               </div>
@@ -56,71 +57,78 @@
               <br />
               <fieldset>
                 <legend id="projectLegend">New Project</legend>
-                <div class="project-create-container">
-                  <!-- Row 1 / Col 1 -->
-                  <div class="align-right">
-                    <label for="tbProjectName">Name:</label>
-                  </div>
-                  <!-- Row 1 / Col 2 -->
-                  <div>
-                    <input id="tbProjectName" />
-                  </div>
-                  <!-- Row 2 / Col 1 -->
-                  <div class="align-right">
-                    <label for="tbProjectLocation">Location:</label>
-                  </div>
-                  <!-- Row 2 / Col 2 -->
-                  <div>
-                    <input id="tbProjectLocation" />
-                  </div>
+                <form id="newProjectForm" onsubmit="return false">
+                  <div class="project-create-container">
+                    <!-- Row 1 / Col 1 -->
+                    <div class="align-right">
+                      <label for="tbProjectName">Name:</label>
+                    </div>
+                    <!-- Row 1 / Col 2 -->
+                    <div>
+                      <input id="tbProjectName" />
+                    </div>
+                    <!-- Row 2 / Col 1 -->
+                    <div class="align-right">
+                      <label for="tbProjectLocation">Location:</label>
+                    </div>
+                    <!-- Row 2 / Col 2 -->
+                    <div class="project-location-container">
+                      <input id="tbProjectLocation" />
+                      <button id="btnOpenFolder" class="flat-button" >
+                        <img src="./assets/ellipsis-horizontal.png" />
+                      </button>
+                    </div>
                     <!-- Row 3 / Col 1 -->
-                  <div class="align-right">
-                    <label for="ddProjectLanguages">Language:</label>
+                    <div class="align-right">
+                      <label for="ddProjectLanguages">Language:</label>
+                    </div>
+                    <!-- Row 3 / Col 2 -->
+                    <div class="items-center">
+                      <select id="ddProjectLanguages" size="1">
+                        <option>C#</option>
+                        <option>F#</option>
+                        <option>VB</option>
+                      </select>
+
+                      <input id="cbProjectForce" type="checkbox" />
+                      <label
+                        for="cbProjectForce"
+                        title="Forces content to be generated even if it would change existing files"
+                      >
+                        &nbsp;Force&nbsp;
+                      </label>
+
+                      <input id="cbProjectDryRun" type="checkbox" />
+                      <label
+                        for="cbProjectDryRun"
+                        title="Displays a summary of what would happen if the given command line were run if it would result in a template creation"
+                      >
+                        &nbsp;Dry Run&nbsp;
+                      </label>
+
+                      <input id="cbOpenVSCode" type="checkbox" />
+                      <label for="cbOpenVSCode">&nbsp;Open VS Code on completion</label>
+                    </div>
                   </div>
-                  <!-- Row 3 / Col 2 -->
-                  <div class="items-center">
-                    <select id="ddProjectLanguages" style="width: 120px;" size="1">
-                      <option>C#</option>
-                      <option>F#</option>
-                      <option>VB</option>
-                    </select>
 
-                    <input id="cbProjectForce" type="checkbox" />
-                    <label
-                      for="cbProjectForce"
-                      title="Forces content to be generated even if it would change existing files">
-                      &nbsp;Force&nbsp;
-                    </label>
-
-                    <input id="cbProjectDryRun" type="checkbox" />
-                    <label
-                      for="cbProjectDryRun"
-                      title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
-                      &nbsp;Dry Run&nbsp;
-                    </label>
-
-                    <input id="cbOpenVSCode" type="checkbox" />
-                    <label for="cbOpenVSCode">&nbsp;Open VS Code on completion</label>
+                  <div class="align-center">
+                    <button class="button-create-project">Create Project</button>
                   </div>
-                </div>
-
-                <div class="align-center">
-                  <button class="button-create-project">CREATE!</button>
-                </div>
-                <a href="#" class="project-clear" title="Clear all form values">Clear Data</a>
+                  <a id="clearNewProjectForm" href="#" class="project-clear" title="Clear all form values">Clear Data</a>
+                </form>
               </fieldset>
 
               <div class="console-container">
                 <div class="console-titlebar">
-                  <label class="command-label">Command Viewer</label>
+                  <label class="command-label">Output</label>
 
                   <div class="console-events-container">
                     <label for="consoleEvents">Events:&nbsp;</label>
                     <select id="consoleEvents" size="1">
-                      <option>dotnet new --list</option>
+                      <option></option>
                     </select>
                   </div>
-                  
+
                   <div class="console-themes-container">
                     <label for="consoleEvents">Themes:&nbsp;</label>
                     <select id="consoleThemes" size="1">

@@ -1,9 +1,11 @@
 import {ipcMain, ipcRenderer} from 'electron'
 import {spawn} from 'child_process'
 import {StringDecoder} from 'string_decoder'
+import {DotNetCLIHistory} from '../models/dotnetCLIHistory'
 
 export class DotnetCLI {
   public static readonly ProcessName = 'dotnet'
+  public static CommandHistory: DotNetCLIHistory[]
 
   public getItemTemplates(): void {
     // TODO: Find template guide
@@ -24,6 +26,7 @@ export class DotnetCLI {
     })
 
     child.on('exit', _ => {
+
       ipcMain.emit(emitEvent, dotnetOutput)
     })
   }
