@@ -2,7 +2,7 @@ import { DocumentModel } from './documentModel'
 import { DotNetTemplate } from '../models/dotnetTemplate'
 import { HtmlAttribute } from '../models/htmlAttribute'
 import { HtmlNamedColors } from '../client-scripts/htmlNamedColors'
-import { ipcRenderer, OpenDialogOptions, remote} from 'electron'
+import { ipcRenderer, OpenDialogOptions, remote, shell, OpenExternalOptions} from 'electron'
 
 const dom = new DocumentModel()
 let templateLanguages: string[] = []
@@ -10,25 +10,39 @@ let templateTags: string[] = []
 
 window.addEventListener('DOMContentLoaded', _ => {
   const btnOpenFolder = <HTMLButtonElement>document.getElementById('btnOpenFolder')
+  const createProject = <HTMLButtonElement>document.getElementById('createProject')
   const clearNewProjectForm = <HTMLAnchorElement>document.getElementById('clearNewProjectForm')
   const consoleThemes = <HTMLSelectElement>document.getElementById('consoleThemes')
+  const getTemplates = <HTMLAnchorElement>document.getElementById('getTemplates')
   const newProjectForm = <HTMLFormElement>document.getElementById('newProjectForm')
   const outputConsole = <HTMLDivElement>document.getElementById('console')
   const projectLocation = <HTMLInputElement>document.getElementById('tbProjectLocation')
   
+  createProject.addEventListener('click', () => {
+    ipcRenderer.send('create-project-click')
+  })
+
   clearNewProjectForm.addEventListener('click', () => {
     newProjectForm.reset()
   })
 
-  let options: OpenDialogOptions = {
+  let shellOptions: OpenExternalOptions = {
+    activate: true
+  }
+
+  getTemplates.addEventListener('click', () => {
+    shell.openExternal('https://dotnetnew.azurewebsites.net'),
+    shellOptions
+  })
+
+  let dialogOptions: OpenDialogOptions = {
     title: "Set Project Location",
     properties: ["openDirectory"],
     message: "Select the location of your project",
   }
   
   btnOpenFolder.addEventListener('click', () => {
-    remote.dialog.showOpenDialog(options, (folderPaths: string[]) => {
-      alert('tyt')
+    remote.dialog.showOpenDialog(dialogOptions, (folderPaths: string[]) => {
       projectLocation.value = 'Yrs: ' + folderPaths[0]
     })
   })
@@ -67,7 +81,6 @@ function uniqueElements(value: any, index: any, self: string | any[]) {
 }
 
 ipcRenderer.on('project-path-save', (_: any) => {
-
 })
 
 ipcRenderer.on('dotnetCLI-data-output', (_: any, data: string) => {
@@ -79,6 +92,7 @@ ipcRenderer.on('dotnetCLI-data-output', (_: any, data: string) => {
 // Creates LI elements for each template and adds them to the main list
 ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
   const dotNetTemplates: DotNetTemplate[] = JSON.parse(jsonData)
+
   let htmlAttributes: HtmlAttribute[] = []
   let sidebarItem: HTMLElement
 
@@ -87,28 +101,33 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
 
   // Create LI elements for each template
   dotNetTemplates.forEach(dotnetTemplate => {
-    sidebarItem = dom.createHtmlElement(
-      'li',
-      'sidebarItems',
-      htmlAttributes,
-      'list-group-header',
-      dotnetTemplate.name
-    )
+    sidebarItem = dom.createHtmlElement('li', 'sidebarItems', htmlAttributes, 'list-group-header', dotnetTemplate.name)
 
     // Capture the LI click event
     sidebarItem.addEventListener('click', (ev: Event) => {
       // Set focus on the selected LI
       (<HTMLLIElement>ev.target).focus()
 
+      // Set languages drop down
+      const projectLanguages = <HTMLSelectElement>document.getElementById('projectLanguages')
+      projectLanguages.innerHTML = ''
+
+      dotnetTemplate.languages.forEach(language => {
+        dom.createHtmlElement('option', 'projectLanguages', null, '', language)
+      })
+      
       // Set title elements
       const templateTitleIcon = <HTMLImageElement>document.getElementById('templateTitleIcon')
       templateTitleIcon.src = dotnetTemplate.icon
+      
       const templateTitleName = <HTMLDivElement>document.getElementById('templateTitleName')
       templateTitleName.innerText = dotnetTemplate.name
+      
       const templateTitleShortName = <HTMLDivElement>document.getElementById('templateTitleShortName')
       templateTitleShortName.innerText = dotnetTemplate.shortName
-      const templateTitleChipContainer = <HTMLSpanElement>document.getElementById('templateTitleChipContainer')
-      templateTitleChipContainer.innerHTML = ''
+      
+      const templateChips = <HTMLSpanElement>document.getElementById('templateChips')
+      templateChips.innerHTML = ''
 
       // Set new project fieldset
       const projectLegend = <HTMLLegendElement>document.getElementById('projectLegend')
@@ -119,42 +138,24 @@ ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
       
       HtmlNamedColors.ColorList.forEach(color => {
         htmlAttributes.push(new HtmlAttribute('value', color))
-        
-        dom.createHtmlElement(
-          'option',
-          'consoleThemes',
-          htmlAttributes,
-          '',
-          color)
+        dom.createHtmlElement('option', 'consoleThemes', htmlAttributes, '', color)
       })
 
       // Create chips for each language the template supports
       dotnetTemplate.languages.forEach(language => {
-        dom.createHtmlElement(
-          'span',
-          'templateTitleChipContainer',
-          null,
-          'chip',
-          language)
+        dom.createHtmlElement('span', 'templateChips', null, 'chip', language)
       })
 
       // Create chips for each tag assigned to the template
       dotnetTemplate.tags.forEach(tag => {
-        dom.createHtmlElement(
-          'span',
-          'templateTitleChipContainer',
-          null,
-          'chip',
-          tag)
+        dom.createHtmlElement('span', 'templateChips', null, 'chip', tag)
       })
     })
   })
 })
 
 ipcRenderer.on('dotnet-templates-loaded', (_: any, templateData: string[][]) => {
-  console.log(templateData)
+  // Filter the tags and languages from all the templates to a unique list
   templateTags = templateData[0].filter(uniqueElements)
   templateLanguages = templateData[1].filter(uniqueElements)
-  console.log(templateTags)
-  console.log(templateLanguages)
 })

@@ -20,6 +20,7 @@ app.on('ready', _ => {
   mainWindow = new BrowserWindow({
     height: 768,
     width: 1366,
+    icon: './assets/dotnetUI.png',
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
@@ -39,13 +40,13 @@ app.on('ready', _ => {
   })
 })
 
-// ipcMain.on('open-vs-code', (_: any) => {
-//   const vsCode = spawn('C:\\local\\VS Code\\Code.exe', ['../markdown-quickview'])
-// })
+ipcMain.on('create-project-click', (_: any) => {
+  const vsCode = spawn('C:\\local\\VS Code\\Code.exe', ['../markdown-quickview'])
+})
 
 ipcMain.on('new-project-load', (_: any) => {
   const cli = new DotnetCLI()
-  cli.getProjectTemplates()
+  cli.createProject()
 })
 
 ipcMain.on('dotnet-projects-loaded', (data: string) => {

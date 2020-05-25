@@ -1,11 +1,18 @@
 =li-hover-filter($property)
   -webkit-filter: $property
   filter: brightness($property)
+  
+%hr-properties
+  left: 0
+  margin: 0
+  padding: 0
+  position: absolute
+  right: 0
 
 .sidebar
   background-color: $sidebar-background
-  border: .5px solid $sidebar-border
   border-left-color: transparent
+  border: .5px solid $sidebar-border
   bottom: 0
   box-sizing: border-box
   left: 0
@@ -18,11 +25,28 @@
   width: 250px
   word-wrap: none
 
+  a
+    bottom: 5px
+    left: 15px
+    position: absolute
+
+  .hr-bottom
+    @extend %hr-properties
+    bottom: 27px
+  
+  .hr-top
+    @extend %hr-properties
+    top: 54px
+
   ul
+    bottom: 30px
     cursor: default
     list-style: none
     margin: 2px
+    overflow-y: auto
     padding: 0
+    position: absolute
+    top: 60px
 
     li
       border: .5px solid transparent
@@ -32,12 +56,23 @@
     
     li:focus
       background-color: $sidebar-focus-background
-      color: $sidebar-focus-foreground
-      border: .5px solid $sidebar-focus-border
       border-radius: 5px
+      border: .5px solid $sidebar-focus-border
+      color: $sidebar-focus-foreground
       outline: none
 
     li:hover
       +li-hover-filter(brightness(133%))
       text-shadow: 0.33px 0.33px 2px $sidebar-title-foreground
-      
+
+  .favorites-container
+    position: absolute
+    top: 5px
+    left: 20px
+
+    input
+      margin-left: 10px
+
+    label
+      font-weight: 600
+

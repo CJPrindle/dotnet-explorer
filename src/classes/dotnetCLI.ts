@@ -12,6 +12,10 @@ export class DotnetCLI {
     this.executeCommand(['new', '--type', 'item'], 'dotnet-items-loaded')
   }
 
+  public createProject(): void {
+    this.executeCommand(['new', '--type', 'project'], 'dotnet-projects-loaded')
+  }
+
   public getProjectTemplates(): void {
     this.executeCommand(['new', '--type', 'project'], 'dotnet-projects-loaded')
   }

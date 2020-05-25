@@ -1,9 +1,10 @@
 {
-  "name": "dotnet-explorer",
+  "name": "dotnetUI",
   "version": "1.0.0",
   "description": "A GUI for the dotnet CLI ",
+  "icon": "./src/assets/dotnetUI.png",
   "main": "./bin/main.js",
-  "productName": "dotNet Explorer",
+  "productName": "dotNetUI",
   "deprecated": false,
   "scripts": {
     "dev": "electron . --debug",

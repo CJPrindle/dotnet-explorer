@@ -14,7 +14,6 @@ rm -R ./bin
 
 mkdir -p ./bin/client-scripts
 mkdir -p ./bin/images
-mkdir -p ./bin/photon
 mkdir -p ./bin/stylesheets
 
 cp ./src/*.html ./bin

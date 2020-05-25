@@ -12,11 +12,11 @@
         <div class="main-content-left">
           <div class="container">
             <div class="activitybar">
-              <button id="templatesCommon" class="flat-button" title="Common Projects">
-                <img src="./assets/projects/project-netcore-32~dark.png" />
+              <button id="projectTemplates" class="flat-button" title="Project Templates">
+                <img src="./assets/projects/project-template.png" />
               </button>
-              <button id="templatesWeb" class="flat-button">
-                <img src="./assets/projects/project-aspnet-32~dark.png" />
+              <button id="itemTemplates" class="flat-button" title="Item Templates">
+                <img src="./assets/projects/item-template.png" />
               </button>
               <button id="templatesTest" class="flat-button">
                 <img src="./assets/projects/project-netcore-test-32~dark.png" />
@@ -32,9 +32,27 @@
         </div>
         <div class="main-content-right">
           <div class="container">
+            
             <div class="sidebar">
+              <div class="types-container items-center">
+                <label for="templateTypes">Type:</label>
+                <select id="templateTypes" size="1">
+                  <select id="templateTypes" size="1">
+                  <option>Items</option>
+                  <option selected="true">Projects</option>
+                </select>
+              </div>
+              <div class="favorites-container items-center">
+               
+                <label for="viewFavorites">View Favorites</label>
+                <input id="viewFavorites" type="checkbox" />
+              </div>
+              <hr class="hr-top" />
               <ul id="sidebarItems"></ul>
+              <hr class="hr-bottom" />
+              <a id="getTemplates" href="#">Get More Templates</a>
             </div>
+
             <div id="editor" class="editor">
               <div class="template-info-container">
                 <img id="templateTitleIcon" class="template-title-icon" src="assets/templates/default.png" />
@@ -43,7 +61,7 @@
                   <div>
                     <span id="templateTitleShortName" class="template-shortname">ShortName</span>
                     <span class="divider"></span>
-                    <span id="templateTitleChipContainer"></span>
+                    <span id="templateChips"></span>
                   </div>
                   <br />
                   <div class="items-center" title="Mark this template as a favorite">
@@ -80,11 +98,11 @@
                     </div>
                     <!-- Row 3 / Col 1 -->
                     <div class="align-right">
-                      <label for="ddProjectLanguages">Language:</label>
+                      <label for="projectLanguages">Language:</label>
                     </div>
                     <!-- Row 3 / Col 2 -->
                     <div class="items-center">
-                      <select id="ddProjectLanguages" size="1">
+                      <select id="projectLanguages" size="1">
                         <option>C#</option>
                         <option>F#</option>
                         <option>VB</option>
@@ -112,7 +130,7 @@
                   </div>
 
                   <div class="align-center">
-                    <button class="button-create-project">Create Project</button>
+                    <button id="createProject" class="button-create-project">Create Project</button>
                   </div>
                   <a id="clearNewProjectForm" href="#" class="project-clear" title="Clear all form values">Clear Data</a>
                 </form>
@@ -155,7 +173,12 @@
       <div class="main-footer">
         <div class="container">
           <div class="statusbar">
-            <span>Welcome to .Net Commander!</span>
+            <div id="statusbar-col1">
+              <span>Welcome to dotnetUI</span>
+            </div>
+            <div id="statusbar-col2"></div>
+            <div id="statusbar-col3"></div>
+            <div id="statusbar-col4"></div>
           </div>
         </div>
       </div>

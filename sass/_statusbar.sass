@@ -1,19 +1,29 @@
 .statusbar
   background-color: $statusbar-background
-  border: .5px solid $statusbar-border
-  bottom: 1
+  border: 1px solid $statusbar-border
+  bottom: 0
   box-sizing: border-box
   color: $statusbar-foreground
-  display: flex
+  display: grid
+  grid-template-columns: 200px 200px 200px auto
+  grid-column-gap: .5px
   font-size: .75em
   font-weight: 500
   left: 0
   margin: auto
   overflow: hidden
-  padding: 0 0 0 10px
+  padding: 0
   position: absolute
   right: 0
   top: 0
+
+  div
+    align-items: center
+    background-color: $statusbar-section-background
+    color: $statusbar-foreground
+    font-weight: 600
+    display: flex
+    padding: 2px
 
   span
     margin-bottom: auto
