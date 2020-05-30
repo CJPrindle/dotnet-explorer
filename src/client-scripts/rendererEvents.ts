@@ -1,52 +1,97 @@
-import { DocumentModel } from './documentModel'
-import { DotNetTemplate } from '../models/dotnetTemplate'
-import { HtmlAttribute } from '../models/htmlAttribute'
-import { HtmlNamedColors } from '../client-scripts/htmlNamedColors'
-import { ipcRenderer, OpenDialogOptions, remote, shell, OpenExternalOptions} from 'electron'
-
-const dom = new DocumentModel()
-let templateLanguages: string[] = []
-let templateTags: string[] = []
+import { app, ipcRenderer, OpenDialogOptions, OpenExternalOptions, remote, shell, BrowserWindow, dialog} from 'electron'
+import { SettingsUtil } from '../classes/SettingsUtil'
+import { Template } from '../models/Template'
+import { Utilities } from '../classes/Utilities'
+import * as path from 'path'
+import modal from 'electron-modal'
 
 window.addEventListener('DOMContentLoaded', _ => {
-  const btnOpenFolder = <HTMLButtonElement>document.getElementById('btnOpenFolder')
+  const openFolderDialog = <HTMLButtonElement>document.getElementById('openFolderDialog')
   const createProject = <HTMLButtonElement>document.getElementById('createProject')
   const clearNewProjectForm = <HTMLAnchorElement>document.getElementById('clearNewProjectForm')
   const consoleThemes = <HTMLSelectElement>document.getElementById('consoleThemes')
+  const favoriteTemplate = <HTMLInputElement>document.getElementById('favoriteTemplate')
   const getTemplates = <HTMLAnchorElement>document.getElementById('getTemplates')
   const newProjectForm = <HTMLFormElement>document.getElementById('newProjectForm')
   const outputConsole = <HTMLDivElement>document.getElementById('console')
-  const projectLocation = <HTMLInputElement>document.getElementById('tbProjectLocation')
+  const projectDryRun = <HTMLInputElement>document.getElementById('projectDryRun')
+  const projectForce = <HTMLInputElement>document.getElementById('projectForce')
+  const projectLanguages = <HTMLSelectElement>document.getElementById('projectLanguages')
+  const projectLocation = <HTMLInputElement>document.getElementById('projectLocation')
+  const projectName = <HTMLInputElement>document.getElementById('projectName')
+  const projectOpen = <HTMLInputElement>document.getElementById('projectOpen')
+  const viewFavorites = <HTMLInputElement>document.getElementById('viewFavorites')
+  const dotnetInfo = <HTMLButtonElement>document.getElementById('dotnetInfo')
   
-  createProject.addEventListener('click', () => {
-    ipcRenderer.send('create-project-click')
+  dotnetInfo.addEventListener('click', () => {
+    ipcRenderer.send('dotnet-info-click')
   })
 
+  viewFavorites.addEventListener('click', () => {
+    if(viewFavorites.checked) {
+      Utilities.LoadSidebarTemplates(
+         <Template[]>SettingsUtil.LoadFavoriteTemplateList(Utilities.CurrentTemplates),
+         false)
+    }
+    else {
+      Utilities.LoadSidebarTemplates(
+        <Template[]>Utilities.CurrentTemplates, true)
+    }
+  })
+
+  favoriteTemplate.addEventListener('click', () => {
+    favoriteTemplate.checked 
+      ? SettingsUtil.AddFavoriteTemplate(Utilities.CurrentTemplate)
+      : SettingsUtil.RemoveFavoriteTemplate(Utilities.CurrentTemplate)
+  })
+
+  createProject.addEventListener('click', () => {
+    // Handles the creation of a new project
+    const projectValues = {
+      dryRun: projectDryRun.checked,
+      force: projectForce.checked,
+      language: projectLanguages.options[projectLanguages.selectedIndex].innerText,
+      name: projectName.value,
+      open: projectOpen.checked,
+      path: projectLocation.value,
+      template: Utilities.CurrentTemplate
+    }
+
+    ipcRenderer.send('create-project-click', projectValues)
+  })
+
+  // Clears the form elements when creating a new project
   clearNewProjectForm.addEventListener('click', () => {
     newProjectForm.reset()
   })
 
+  // Options for opening the dotnet template web site
   let shellOptions: OpenExternalOptions = {
     activate: true
   }
 
+  // Launches a browser and navigates to the dotnet template website
   getTemplates.addEventListener('click', () => {
     shell.openExternal('https://dotnetnew.azurewebsites.net'),
     shellOptions
   })
+ 
+  // Opens a dialog window for choosing a folder
+  openFolderDialog.addEventListener('click', () => {
+    // Options for opening the file selection dialog
+    const dialogOptions: OpenDialogOptions = {
+      title: "Set Project Location",
+      properties: ["openDirectory"],
+      message: "Select the location of your project",
+    }
 
-  let dialogOptions: OpenDialogOptions = {
-    title: "Set Project Location",
-    properties: ["openDirectory"],
-    message: "Select the location of your project",
-  }
-  
-  btnOpenFolder.addEventListener('click', () => {
-    remote.dialog.showOpenDialog(dialogOptions, (folderPaths: string[]) => {
-      projectLocation.value = 'Yrs: ' + folderPaths[0]
-    })
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions)
+      .then((data) => {
+        projectLocation.value = data.filePaths.length > 0 ? data.filePaths[0] : ''
+      })
   })
 
+  // Handles a console theme change
   consoleThemes.addEventListener('change', () => {
     switch(consoleThemes.value) {
       case "grass":
@@ -72,17 +117,17 @@ window.addEventListener('DOMContentLoaded', _ => {
     }
   })
 
-  ipcRenderer.send('new-project-load')
+  // Broadcast the main window has beed loaded
+  ipcRenderer.send('dom-content-loaded')
 })
 
-// Returns unique values from array
-function uniqueElements(value: any, index: any, self: string | any[]) {
-  return self.indexOf(value) === index
-}
-
-ipcRenderer.on('project-path-save', (_: any) => {
+// Process the output from a CLI command
+ipcRenderer.on('project-created-output', (_: any, data: string) => {
+  const consoleOutput = <HTMLPreElement>document.getElementById('consoleOutput')
+  consoleOutput.innerText = data
 })
 
+// Process the output from a CLI command
 ipcRenderer.on('dotnetCLI-data-output', (_: any, data: string) => {
   const consoleOutput = <HTMLPreElement>document.getElementById('consoleOutput')
   consoleOutput.innerText = data
@@ -91,71 +136,52 @@ ipcRenderer.on('dotnetCLI-data-output', (_: any, data: string) => {
 // Called after the template list from the dotnet CLI has been parsed.
 // Creates LI elements for each template and adds them to the main list
 ipcRenderer.on('dotnet-projects-loaded', (_: any, jsonData: string) => {
-  const dotNetTemplates: DotNetTemplate[] = JSON.parse(jsonData)
-
-  let htmlAttributes: HtmlAttribute[] = []
-  let sidebarItem: HTMLElement
-
-  // Add a tabIndex attribute to allow the LI to receive focus
-  htmlAttributes.push(new HtmlAttribute('tabIndex', 0))
-
-  // Create LI elements for each template
-  dotNetTemplates.forEach(dotnetTemplate => {
-    sidebarItem = dom.createHtmlElement('li', 'sidebarItems', htmlAttributes, 'list-group-header', dotnetTemplate.name)
-
-    // Capture the LI click event
-    sidebarItem.addEventListener('click', (ev: Event) => {
-      // Set focus on the selected LI
-      (<HTMLLIElement>ev.target).focus()
-
-      // Set languages drop down
-      const projectLanguages = <HTMLSelectElement>document.getElementById('projectLanguages')
-      projectLanguages.innerHTML = ''
-
-      dotnetTemplate.languages.forEach(language => {
-        dom.createHtmlElement('option', 'projectLanguages', null, '', language)
-      })
-      
-      // Set title elements
-      const templateTitleIcon = <HTMLImageElement>document.getElementById('templateTitleIcon')
-      templateTitleIcon.src = dotnetTemplate.icon
-      
-      const templateTitleName = <HTMLDivElement>document.getElementById('templateTitleName')
-      templateTitleName.innerText = dotnetTemplate.name
-      
-      const templateTitleShortName = <HTMLDivElement>document.getElementById('templateTitleShortName')
-      templateTitleShortName.innerText = dotnetTemplate.shortName
-      
-      const templateChips = <HTMLSpanElement>document.getElementById('templateChips')
-      templateChips.innerHTML = ''
-
-      // Set new project fieldset
-      const projectLegend = <HTMLLegendElement>document.getElementById('projectLegend')
-      projectLegend.innerText = `Project Using Template: ${dotnetTemplate.name}`
-
-      //Load color themes into console header
-      htmlAttributes = []
-      
-      HtmlNamedColors.ColorList.forEach(color => {
-        htmlAttributes.push(new HtmlAttribute('value', color))
-        dom.createHtmlElement('option', 'consoleThemes', htmlAttributes, '', color)
-      })
-
-      // Create chips for each language the template supports
-      dotnetTemplate.languages.forEach(language => {
-        dom.createHtmlElement('span', 'templateChips', null, 'chip', language)
-      })
-
-      // Create chips for each tag assigned to the template
-      dotnetTemplate.tags.forEach(tag => {
-        dom.createHtmlElement('span', 'templateChips', null, 'chip', tag)
-      })
-    })
-  })
+  Utilities.LoadSidebarTemplates(<Template[]>JSON.parse(jsonData))
 })
 
-ipcRenderer.on('dotnet-templates-loaded', (_: any, templateData: string[][]) => {
-  // Filter the tags and languages from all the templates to a unique list
-  templateTags = templateData[0].filter(uniqueElements)
-  templateLanguages = templateData[1].filter(uniqueElements)
+ipcRenderer.on('dotnet-templates-loaded', (_: any) => {
+})
+
+// Called after 'dotnet --info'
+ipcRenderer.on('dotnet-info-output', (_: any, data: string) => {
+
+//  modal.setup()
+
+  modal.open(path.join(__dirname, '../dotnetInfo.html'), {
+    // maximizable: false,
+    width: 1024,
+    height: 768
+   
+  }, {
+ 
+    // Any data you want to pass to the modal
+    title: 'dotnet SDK information'
+   
+  })
+  // let infoWindow : Electron.BrowserWindow
+  
+  // infoWindow = new BrowserWindow({
+  //   center: true,
+  //   title: "dotnetUI SDK Info",
+  //   height: 768,
+  //   width: 1024,
+  //   maximizable: false,
+  //   fullscreen: false,
+  //   maxHeight: 768,
+  //   maxWidth: 1024,
+  //   icon: __dirname + '/assets/dotnetUI.png',
+  //   webPreferences: {
+  //     nodeIntegration: true,
+  //     webSecurity: false,
+  //     devTools: true,
+  //     webgl: true
+  //   }
+  // })
+
+  //infoWindow.loadURL(path.join('file://', __dirname, '/dotnetInfo.html'))
+  //dialog.showCertificateTrustDialog
+  //window.open(path.join('file://', __dirname, '../dotnetInfo.html'), 'modal', 'nodeIntegration=yes')  
+  // infoWindow.on('closed', _ => {
+  //   infoWindow = null
+  // })
 })

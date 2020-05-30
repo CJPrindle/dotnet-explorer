@@ -14,12 +14,14 @@ rm -R ./bin
 
 mkdir -p ./bin/client-scripts
 mkdir -p ./bin/images
+mkdir -p ./bin/settings
 mkdir -p ./bin/stylesheets
 
-cp ./src/*.html ./bin
-cp -Tr ./src/client-scripts ./bin/client-scripts
 cp -Tr ./src/assets ./bin/assets
+cp -Tr ./src/client-scripts ./bin/client-scripts
 cp -Tr ./src/models ./bin/models
+cp ./src/settings.json ./bin/settings/settings.json
+cp ./src/*.html ./bin
 
 sass ./sass/main.sass ./bin/stylesheets/main.css
 tsc && electron --debug .

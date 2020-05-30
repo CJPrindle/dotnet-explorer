@@ -26,9 +26,9 @@
   word-wrap: none
 
   a
-    bottom: 5px
-    left: 15px
-    position: absolute
+    font-size: 0.9em
+    position: relative
+    top: 5px
 
   .hr-bottom
     @extend %hr-properties
@@ -36,7 +36,7 @@
   
   .hr-top
     @extend %hr-properties
-    top: 54px
+    top: 84px
 
   input, select
     font-size: unset
@@ -46,14 +46,14 @@
     font-weight: 600
 
   ul
-    bottom: 30px
+    bottom: 25px
     cursor: default
     list-style: none
     margin: 2px
     overflow-y: auto
     padding: 0
     position: absolute
-    top: 60px
+    top: 90px
 
     li
       border: .5px solid transparent
@@ -72,14 +72,47 @@
       +li-hover-filter(brightness(133%))
       text-shadow: 0.33px 0.33px 2px $sidebar-title-foreground
 
-  .favorites-container
-    left: 20px
+  .get-templates-container
+    background-color: $sidebar-title-background
+    bottom: 0
+    height: 25px
+    left: 0
+    padding-left: 20px
     position: absolute
-    top: 35px
-    
-  .types-container
-    left:20px
+    right: 0
+
+  .sidebar-options-container
+    background-color: $sidebar-title-background
+    box-sizing: border-box
+    column-gap: 0
+    display: grid
+    grid-template-columns: auto auto
+    grid-template-rows: auto auto
+    left: 1px
+    padding-top: 2px
     position: absolute
-    top: 5px
+    right: 1px
+    row-gap: 10px
+    top: 36px
 
+    label, select option
+      font-size: .9em
+      font-weight: 400
 
+    select
+      width: calc(100% - 15px)
+
+  .sidebar-title
+    background-color: $sidebar-title-background
+    border-bottom: 1px solid $sidebar-title-border
+    border-top: 1px solid $sidebar-title-border
+    color: $sidebar-title-foreground
+    font-size: 1.3em
+    font-weight: 700
+    left: 0
+    padding-bottom: 10px
+    padding-left: 20px
+    padding-top: 5px
+    position: absolute  
+    right: 0
+    top: 0

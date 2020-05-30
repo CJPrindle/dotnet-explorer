@@ -1,0 +1,17 @@
+{
+  "dotnetUISettings": {
+    "Templates": {
+      "Favorites": ["console", "classlib"]
+    },
+    "Projects": {
+      "DefaultPath": "",
+      "Current": [
+        {
+          "Path": "C:/code/c#/api.boxed",
+          "ProjectFile": "api.boxed.csproj",
+          "SolutionFile": ""
+        }
+      ]
+    }
+  }
+}

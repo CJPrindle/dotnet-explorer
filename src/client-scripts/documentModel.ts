@@ -1,5 +1,5 @@
 
-import {HtmlAttribute} from '../models/htmlAttribute';
+import {HtmlAttribute} from '../models/HtmlAttribute';
 
 /**
  * @class 
@@ -17,7 +17,7 @@ export class DocumentModel {
    * @param {string} classNames - CSS class names
    * @param {string} innerText - The text value of the element  
   */
-  createHtmlElement (tagName: string, parentID: string, attributes: HtmlAttribute[],
+  CreateHtmlElement (tagName: string, parentID: string, attributes: HtmlAttribute[],
     classNames: string, innerText: string): HTMLElement {
     
     //Create the new Html element
@@ -26,7 +26,7 @@ export class DocumentModel {
     // Set the attributes
     if (attributes !== null) {
       attributes.forEach(attr => {
-        newElement.setAttribute(attr.name, attr.value);
+        newElement.setAttribute(attr.Name, attr.Value);
       })
     }
 

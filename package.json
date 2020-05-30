@@ -29,19 +29,24 @@
   },
   "dependencies": {
     "@rauschma/stringio": "^1.4.0",
-    "@types/node": "^8.10.52",
-    "electron-json-storage": "^4.1.5",
+    "@types/electron-json-storage": "^4.0.0",
+    "@types/electron-settings": "^3.1.1",
+    "@types/node": "^8.10.61",
+    "electron-json-storage": "^4.1.8",
+    "electron-json-storage-sync": "^1.1.1",
+    "electron-modal": "^1.0.0",
+    "electron-settings": "^3.2.0",
     "electron-shortcut-normalizer": "^1.0.0",
     "file-dialog": "0.0.8",
-    "glob": "^7.1.3",
-    "highlight.js": "^9.13.1",
+    "glob": "^7.1.6",
+    "highlight.js": "^9.18.1",
     "open": "^7.0.4"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
-    "electron": "^4.0.1",
-    "electron-packager": "^13.0.1",
-    "electron-winstaller": "^2.7.0",
-    "typescript": "^3.2.4"
+    "electron": "^9.0.0",
+    "electron-packager": "^14.2.1",
+    "electron-winstaller": "^4.0.0",
+    "typescript": "^3.9.3"
   }
 }

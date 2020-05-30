@@ -1,28 +1,32 @@
 import {ipcMain, ipcRenderer} from 'electron'
 import {spawn} from 'child_process'
 import {StringDecoder} from 'string_decoder'
-import {DotNetCLIHistory} from '../models/dotnetCLIHistory'
+import {CommandHistory} from '../models/CommandHistory'
 
-export class DotnetCLI {
+export class DotNetCLI {
   public static readonly ProcessName = 'dotnet'
-  public static CommandHistory: DotNetCLIHistory[]
+  public static CommandHistory: CommandHistory[]
 
-  public getItemTemplates(): void {
+  public GetItemTemplates(): void {
     // TODO: Find template guide
-    this.executeCommand(['new', '--type', 'item'], 'dotnet-items-loaded')
+    this.ExecuteCommand(['new', '--type', 'item'], 'dotnet-items-loaded')
   }
 
-  public createProject(): void {
-    this.executeCommand(['new', '--type', 'project'], 'dotnet-projects-loaded')
+  public CreateProject(args: string[]): void {
+    this.ExecuteCommand(args, 'project-created')
   }
 
-  public getProjectTemplates(): void {
-    this.executeCommand(['new', '--type', 'project'], 'dotnet-projects-loaded')
+  public GetProjectTemplates(): void {
+    this.ExecuteCommand(['new', '--type', 'project'], 'dotnet-projects-loaded')
   }
 
-  private executeCommand(dotnetArgs: string[], emitEvent: string): void {
+  public GetInfo(): void {
+    this.ExecuteCommand(['--info'], 'dotnet-info-loaded')
+  }
+
+  private ExecuteCommand(dotnetArgs: string[], emitEvent: string): void {
     const decoder = new StringDecoder('utf8')
-    const child = spawn(DotnetCLI.ProcessName, dotnetArgs)
+    const child = spawn(DotNetCLI.ProcessName, dotnetArgs)
     let dotnetOutput = ''
 
     child.stdout.on('data', (data: Buffer) => {
@@ -30,7 +34,6 @@ export class DotnetCLI {
     })
 
     child.on('exit', _ => {
-
       ipcMain.emit(emitEvent, dotnetOutput)
     })
   }

@@ -11,22 +11,22 @@ export class HtmlAttribute {
   * @param {any} value - The value of the attribute
   */
   constructor(name: string, value: any) {
-    this.name = name
-    this.value = value
+    this.Name = name
+    this.Value = value
   }
 
   /**
-  * @summary name property
+  * @summary Name property
   * @description The HTML attribute name property
   * @type {string}
   * @member
   */
-  name: string
+  Name: string
   /**
-  * @summary value property
+  * @summary Value property
   * @description The HTML attribute value property
   * @type {any}
   * @member
   */
-  value: any
+  Value: any
 }

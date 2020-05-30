@@ -18,7 +18,7 @@
               <button id="itemTemplates" class="flat-button" title="Item Templates">
                 <img src="./assets/projects/item-template.png" />
               </button>
-              <button id="templatesTest" class="flat-button">
+              <button id="dotnetInfo" class="flat-button">
                 <img src="./assets/projects/project-netcore-test-32~dark.png" />
               </button>
               <button id="templatesConfig" class="flat-button">
@@ -34,21 +34,34 @@
           <div class="container">
             
             <div class="sidebar">
-              <div class="types-container items-center">
-                <label for="templateTypes">Type:</label>
-                <select id="templateTypes" size="1">
-                  <option>Items</option>
-                  <option selected="true">Projects</option>
-                </select>
+              <div id="sidebarTitle" class="sidebar-title">
+                Templates
               </div>
-              <div class="favorites-container items-center">
-                <label for="viewFavorites">View Favorites:</label>
-                <input id="viewFavorites" type="checkbox" />
+
+              <div class="sidebar-options-container">
+                  <div class="align-right">
+                    <label for="templateTypes">Type:</label>
+                  </div>
+                  <div>
+                    <select id="templateTypes" size="1">
+                      <option>Items</option>
+                      <option selected="true">Projects</option>
+                    </select>
+                  </div>
+                  <div class="align-right">
+                    <label for="viewFavorites">View Favorites:</label>
+                  </div>
+                  <div>
+                    <input id="viewFavorites" type="checkbox" />
+                  </div>
               </div>
-              <hr class="hr-top" />
+              
+              <!-- <hr class="hr-top" /> -->
               <ul id="sidebarItems"></ul>
-              <hr class="hr-bottom" />
-              <a id="getTemplates" href="#">Get More Templates</a>
+              <!-- <hr class="hr-bottom" /> -->
+              <div class="get-templates-container">
+                <a id="getTemplates" href="#">Get More Templates</a>
+              </div>
             </div>
 
             <div id="editor" class="editor">
@@ -62,9 +75,9 @@
                     <span id="templateChips"></span>
                   </div>
                   <br />
-                  <div class="items-center" title="Mark this template as a favorite">
-                    <input id="cbFavorite" type="checkbox" />
-                    <label for="cbFavorite">Favorite</label>
+                  <div class="items-center" title="Check the box to mark this template as a favorite">
+                    <input id="favoriteTemplate" type="checkbox" />
+                    <label for="favoriteTemplate">Favorite</label>
                   </div>
                 </div>
               </div>
@@ -77,20 +90,20 @@
                   <div class="project-create-container">
                     <!-- Row 1 / Col 1 -->
                     <div class="align-right">
-                      <label for="tbProjectName">Name:</label>
+                      <label for="projectName">Name:</label>
                     </div>
                     <!-- Row 1 / Col 2 -->
                     <div>
-                      <input id="tbProjectName" />
+                      <input id="projectName" />
                     </div>
                     <!-- Row 2 / Col 1 -->
                     <div class="align-right">
-                      <label for="tbProjectLocation">Location:</label>
+                      <label for="projectLocation">Location:</label>
                     </div>
                     <!-- Row 2 / Col 2 -->
                     <div class="project-location-container">
-                      <input id="tbProjectLocation" />
-                      <button id="btnOpenFolder" class="flat-button" >
+                      <input id="projectLocation" />
+                      <button id="openFolderDialog" class="flat-button" >
                         <img src="./assets/ellipsis-horizontal.png" />
                       </button>
                     </div>
@@ -106,24 +119,22 @@
                         <option>VB</option>
                       </select>
 
-                      <input id="cbProjectForce" type="checkbox" />
+                      <input id="projectForce" type="checkbox" />
                       <label
-                        for="cbProjectForce"
-                        title="Forces content to be generated even if it would change existing files"
-                      >
+                        for="projectForce"
+                        title="Forces content to be generated even if it would change existing files">
                         &nbsp;Force&nbsp;
                       </label>
 
-                      <input id="cbProjectDryRun" type="checkbox" />
+                      <input id="projectDryRun" type="checkbox" />
                       <label
-                        for="cbProjectDryRun"
-                        title="Displays a summary of what would happen if the given command line were run if it would result in a template creation"
-                      >
+                        for="projectDryRun"
+                        title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
                         &nbsp;Dry Run&nbsp;
                       </label>
 
-                      <input id="cbOpenVSCode" type="checkbox" />
-                      <label for="cbOpenVSCode">&nbsp;Open VS Code on completion</label>
+                      <input id="projectOpen" type="checkbox" />
+                      <label for="projectOpen">Open VS Code on completion</label>
                     </div>
                   </div>
 

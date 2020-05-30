@@ -2,22 +2,30 @@
  * @class 
  * @classdesc A dotnet template item
 */
-export class DotNetTemplate {
-   /**
+export class Template {
+  /**
   * @summary Icon property
   * @description Default image for the template 
   * @type {string[]}
   * @member
   */
-  icon: string
+  Icon: string
 
-    /**
+  /**
+  * @summary IsFavorite property
+  * @description Determines if a template is marked as a favorite
+  * @type {boolean}
+  * @member
+  */
+  IsFavorite: boolean
+
+  /**
   * @summary Languages property
   * @description Contains the CLR languages supported by the template
   * @type {string[]}
   * @member
   */
-  languages: string[]
+  Languages: string[]
 
   /**
   * @summary Name property
@@ -25,7 +33,7 @@ export class DotNetTemplate {
   * @type {string}
   * @member
   */
-  name: string
+  Name: string
 
   /**
   * @summary Short name property
@@ -33,7 +41,7 @@ export class DotNetTemplate {
   * @type {string}
   * @member
   */
-  shortName: string
+  ShortName: string
 
   /**
   * @summary Tags property
@@ -41,5 +49,5 @@ export class DotNetTemplate {
   * @type {string[]}
   * @member
   */
-  tags: string[]
+  Tags: string[]
 }
