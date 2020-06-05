@@ -1,9 +1,9 @@
-import { app, ipcRenderer, OpenDialogOptions, OpenExternalOptions, remote, shell, BrowserWindow, dialog} from 'electron'
+import { ipcRenderer, OpenDialogOptions, OpenExternalOptions, remote, shell} from 'electron'
 import { SettingsUtil } from '../classes/SettingsUtil'
 import { Template } from '../models/Template'
 import { Utilities } from '../classes/Utilities'
 import * as path from 'path'
-import modal from 'electron-modal'
+
 
 window.addEventListener('DOMContentLoaded', _ => {
   const openFolderDialog = <HTMLButtonElement>document.getElementById('openFolderDialog')
@@ -21,9 +21,9 @@ window.addEventListener('DOMContentLoaded', _ => {
   const projectName = <HTMLInputElement>document.getElementById('projectName')
   const projectOpen = <HTMLInputElement>document.getElementById('projectOpen')
   const viewFavorites = <HTMLInputElement>document.getElementById('viewFavorites')
-  const dotnetInfo = <HTMLButtonElement>document.getElementById('dotnetInfo')
+  const sdkInfo = <HTMLButtonElement>document.getElementById('sdkInfo')
   
-  dotnetInfo.addEventListener('click', () => {
+  sdkInfo.addEventListener('click', () => {
     ipcRenderer.send('dotnet-info-click')
   })
 
@@ -144,44 +144,10 @@ ipcRenderer.on('dotnet-templates-loaded', (_: any) => {
 
 // Called after 'dotnet --info'
 ipcRenderer.on('dotnet-info-output', (_: any, data: string) => {
+  const sdkWindow = Utilities.CreateModalWindow('dotnet SDK Information', 490, 440)
 
-//  modal.setup()
-
-  modal.open(path.join(__dirname, '../dotnetInfo.html'), {
-    // maximizable: false,
-    width: 1024,
-    height: 768
-   
-  }, {
- 
-    // Any data you want to pass to the modal
-    title: 'dotnet SDK information'
-   
-  })
-  // let infoWindow : Electron.BrowserWindow
-  
-  // infoWindow = new BrowserWindow({
-  //   center: true,
-  //   title: "dotnetUI SDK Info",
-  //   height: 768,
-  //   width: 1024,
-  //   maximizable: false,
-  //   fullscreen: false,
-  //   maxHeight: 768,
-  //   maxWidth: 1024,
-  //   icon: __dirname + '/assets/dotnetUI.png',
-  //   webPreferences: {
-  //     nodeIntegration: true,
-  //     webSecurity: false,
-  //     devTools: true,
-  //     webgl: true
-  //   }
-  // })
-
-  //infoWindow.loadURL(path.join('file://', __dirname, '/dotnetInfo.html'))
-  //dialog.showCertificateTrustDialog
-  //window.open(path.join('file://', __dirname, '../dotnetInfo.html'), 'modal', 'nodeIntegration=yes')  
-  // infoWindow.on('closed', _ => {
-  //   infoWindow = null
-  // })
+  sdkWindow.loadURL(path.join('file://', __dirname, '../sdkInfo.html'))
+    .then(_ => {
+      sdkWindow.webContents.send('sdk-data-ready', data)
+    })
 })

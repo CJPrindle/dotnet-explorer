@@ -4,6 +4,7 @@ import { Template } from '../models/Template'
 import { HtmlAttribute } from '../models/HtmlAttribute'
 import { DocumentModel } from '../client-scripts/DocumentModel'
 import { SettingsUtil } from './SettingsUtil'
+import { remote, BrowserWindow } from 'electron'
 
 export class Utilities {
   public static CurrentTemplates : Template[]
@@ -91,6 +92,33 @@ export class Utilities {
           dom.CreateHtmlElement('span', 'templateChips', null, 'chip', tag)
         })
       })
+    })
+  }
+
+  public static CreateModalWindow(title: string, height: number, width: number) : BrowserWindow {
+    let BrowserWindow = remote.BrowserWindow;
+
+    return new BrowserWindow({
+      alwaysOnTop: true,
+      center: true,
+      frame: false,
+      height: height,
+      icon: __dirname + '/assets/dotnetUI.png',
+      maximizable: false,
+      minimizable: false,
+      modal: true,
+      resizable: false,
+      hasShadow: true,
+      show: true,
+      title: title,
+      width: width,
+      webPreferences: {
+        nodeIntegration: true,
+        webSecurity: false,
+        devTools: true,
+        webgl: true,
+        nativeWindowOpen: false
+      }
     })
   }
 }

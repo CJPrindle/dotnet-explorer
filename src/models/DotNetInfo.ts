@@ -1,6 +1,6 @@
 import { Url } from "url"
 
-export class DotNetInfo {
+export class SDKInfo {
     SDKVersion: string
     SDKCommit: string
     OSName: string

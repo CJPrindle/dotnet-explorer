@@ -139,6 +139,4 @@ ipcMain.on('dotnet-projects-loaded', (data) => {
   console.log('templateTags', templateTags.filter(uniqueElements).sort((a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())))
 
   mainWindow.webContents.send('dotnet-projects-loaded', JSON.stringify(dotNetTemplates))
-
-  modal.setup()
 })
