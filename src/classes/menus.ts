@@ -34,19 +34,19 @@ export class ApplicationMenus {
           { type: 'separator' },
           { role: 'paste' },
           { role: 'delete' },
-          { role: 'selectall' }
+          { role: 'selectAll' }
         ]
       },
       {
         label: 'View',
         submenu: [
           { role: 'reload' },
-          { role: 'forcereload' },
-          { role: 'toggledevtools' },
+          { role: 'forceReload' },
+          { role: 'toggleDevTools' },
           { type: 'separator' },
-          { role: 'resetzoom' },
-          { role: 'zoomin' },
-          { role: 'zoomout' },
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
           { type: 'separator' },
           { role: 'togglefullscreen' }
         ]
@@ -80,11 +80,11 @@ export class ApplicationMenus {
   }
 
   public static registerShortCuts(): void {
-    globalShortcut.register('Ctrl+N', (_: any) => {
+    globalShortcut.register('Ctrl+N', () => {
       console.log('Creating new project...')
     })
 
-    globalShortcut.register('Ctrl+O', (_: any) => {
+    globalShortcut.register('Ctrl+O', () => {
       console.log('Opening existing project...')
     })
   }
