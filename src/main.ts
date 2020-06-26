@@ -1,11 +1,10 @@
-import { app, BrowserWindow, ipcMain, Menu, IpcMainEvent } from 'electron'
-import { ApplicationMenus } from './classes/ApplicationMenus'
-import { DotNetCLI } from './classes/DotNetCLI'
-import { SettingsUtil } from './classes/SettingsUtil'
+import { app, BrowserWindow, ipcMain, Menu } from 'electron'
+import { ApplicationMenus } from './classes/applicationMenus'
+import { DotNetCLI } from './classes/dotnetCLI'
+import { SettingsUtil } from './classes/settingsUtil'
 import { Template } from './models/Template'
-import { Utilities } from './classes/Utilities'
+import { Utilities } from './classes/utilities'
 import * as path from 'path'
-import * as modal from 'electron-modal'
 
  // The Electron host window
 let mainWindow: BrowserWindow
@@ -21,7 +20,7 @@ function uniqueElements(value: any, index: number, self: string | any[]) {
   return self.indexOf(value) === index
 }
 
-app.on('ready', _ => {
+app.on('ready', (_: any) => {
   mainWindow = new BrowserWindow({
     center: true,
     title: "dotnetUI",
@@ -38,19 +37,20 @@ app.on('ready', _ => {
 
   mainWindow.maximize()
   mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
+  
   Menu.setApplicationMenu(ApplicationMenus.GetMainTemplate())
   ApplicationMenus.RegisterShortCuts()
  
-  mainWindow.on('closed', _ => {
+  mainWindow.on('closed', (_: any) => {
     mainWindow = null
   })
 })
 
-ipcMain.on('dotnet-info-click', (data, project) => {
+ipcMain.on('dotnet-info-click', () => {
   new DotNetCLI().GetInfo()
 })
 
-ipcMain.on('create-project-click', (data, project) => {
+ipcMain.on('create-project-click', (_: any, project: any) => {
   let args: string[] = []
   
   // New project
@@ -85,7 +85,7 @@ ipcMain.on('dotnet-info-loaded', (data: any) => {
   mainWindow.webContents.send('dotnet-info-output', data)
 })
 
-ipcMain.on('dotnet-projects-loaded', (data) => {
+ipcMain.on('dotnet-projects-loaded', (data: any) => {
   const lines = data.toString().split('\n') // Convert dotnet CLI output to an array of text lines
   let templatesTable: string[] = []
   let templateLanguages: string[] = []
@@ -103,7 +103,7 @@ ipcMain.on('dotnet-projects-loaded', (data) => {
   }
 
   // Find the starting position of each column using the 'Console Application' template as a guide
-  const consoleTemplate = templatesTable.find(template => template.substr(0, 19) == 'Console Application')
+  const consoleTemplate: string = templatesTable.find(template => template.substr(0, 19) == 'Console Application')
   const shortNameStart = consoleTemplate.indexOf('console') // Short name column position
   const languagesStart = consoleTemplate.indexOf('[C#]') // Languages column position
   const tagsStart = consoleTemplate.indexOf('Common') // Tags columns position

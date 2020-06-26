@@ -1,7 +1,7 @@
 import { ipcRenderer, OpenDialogOptions, OpenExternalOptions, remote, shell} from 'electron'
-import { SettingsUtil } from '../classes/SettingsUtil'
+import { SettingsUtil } from '../classes/settingsUtil'
 import { Template } from '../models/Template'
-import { Utilities } from '../classes/Utilities'
+import { Utilities } from '../classes/utilities'
 import * as path from 'path'
 
 
@@ -71,13 +71,13 @@ window.addEventListener('DOMContentLoaded', _ => {
   }
 
   // Launches a browser and navigates to the dotnet template website
-  getTemplates.addEventListener('click', () => {
+  getTemplates.addEventListener('click', (_: any) => {
     shell.openExternal('https://dotnetnew.azurewebsites.net'),
     shellOptions
   })
  
   // Opens a dialog window for choosing a folder
-  openFolderDialog.addEventListener('click', () => {
+  openFolderDialog.addEventListener('click', (_: any) => {
     // Options for opening the file selection dialog
     const dialogOptions: OpenDialogOptions = {
       title: "Set Project Location",
@@ -86,35 +86,47 @@ window.addEventListener('DOMContentLoaded', _ => {
     }
 
     remote.dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions)
-      .then((data) => {
+      .then((data: any) => {
         projectLocation.value = data.filePaths.length > 0 ? data.filePaths[0] : ''
       })
   })
 
   // Handles a console theme change
-  consoleThemes.addEventListener('change', () => {
+  consoleThemes.addEventListener('change', (_: any) => {
+    let consoleBackground = ''
+    let consoleForeground = ''
+    let consoleTheme = ''
+
     switch(consoleThemes.value) {
       case "grass":
-        outputConsole.style.backgroundColor = "DarkGreen"
-        outputConsole.style.color = "AntiqueWhite"
+        consoleBackground = "DarkGreen"
+        consoleForeground = "AntiqueWhite"
+        consoleTheme = "grass"
         break
       case "manpages":
-        outputConsole.style.backgroundColor = "PaleGoldenRod"
-        outputConsole.style.color = "black"
+        consoleBackground = "PaleGoldenRod"
+        consoleForeground = "black"
+        consoleTheme = "manpages"
         break
       case "novel":
-        outputConsole.style.backgroundColor = "NavajoWhite"
-        outputConsole.style.color = "brown"
+        consoleBackground = "NavajoWhite"
+        consoleForeground = "brown"
+        consoleTheme = "novel"
         break
       case "redsands":
-          outputConsole.style.backgroundColor = "DarkRed"
-          outputConsole.style.color = "LemonChiffon"
-          break  
-      
+        consoleBackground = "DarkRed"
+        consoleForeground = "LemonChiffon"
+        consoleTheme = "redsands"
+        break  
       default:
-        outputConsole.style.backgroundColor = ""
-        outputConsole.style.color = ""
+        consoleBackground = ""
+        consoleForeground = ""
     }
+
+    outputConsole.style.backgroundColor = consoleBackground
+    outputConsole.style.color = consoleForeground
+
+    SettingsUtil.SetConsoleTheme(consoleTheme, consoleBackground, consoleForeground)
   })
 
   // Broadcast the main window has beed loaded
@@ -147,7 +159,7 @@ ipcRenderer.on('dotnet-info-output', (_: any, data: string) => {
   const sdkWindow = Utilities.CreateModalWindow('dotnet SDK Information', 490, 440)
 
   sdkWindow.loadURL(path.join('file://', __dirname, '../sdkInfo.html'))
-    .then(_ => {
+    .then((_: any) => {
       sdkWindow.webContents.send('sdk-data-ready', data)
     })
 })
