@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="stylesheets/main.css" />
   </head>
   <body>
-    <form id='sdkDataForm'>
+    <form id="sdkDataForm">
       <input id="sdkData" type="hidden" value="" />
     </form>
     <div class="title-bar">
       <button onclick="window.close()">&nbsp;X&nbsp;</button>
     </div>
     <div class="sdk-info-container">
-      <h6>.NET Core SDK</h6>
+      <!-- <h6>.NET Core SDK</h6>
       <div class="items-center">
         <label>Version:</label>
         <span id="sdkVersion"></span>
@@ -23,31 +23,40 @@
       <div class="items-center">
         <label>Commit:</label>
         <span id="sdkCommit"></span>
-      </div> 
+      </div>
 
       <hr />
 
       <h6>Runtime Environment</h6>
-      <div class="runtime-environment-container">
+      <div class="items-center">
         <label>OS Name:</label>
-        <span id="OSName"></span>
-
-        <label>OS Version:</label>
-        <span id="OSVersion"></span>
-
-        <label>OS Platform:</label>
-        <span id="OSVersion"></span>
-
-        <label>Runtime:</label>
-        <span id="Runtime"></span>
-
-        <label>Base Path:</label>
-        <span id="BasePath"></span>
-
-        <label>Hosting Version:</label>
-        <span id="HostingVersion"></span>
+        <span id="osName"></span>
       </div>
-
+      <br />
+      <div class="items-center">
+        <label>OS Version:</label>
+        <span id="osVersion"></span>
+      </div>
+      <br />
+      <div class="items-center">
+        <label>OS Platform:</label>
+        <span id="osPlatform"></span>
+      </div>
+      <br />
+      <div class="items-center">
+        <label>Runtime:</label>
+        <span id="runtime"></span>
+      </div>
+      <br />
+      <div class="items-center">
+        <label>Base Path:</label>
+        <span id="basePath"></span>
+      </div>
+      <br />
+      <div class="items-center">
+        <label>Hosting Version:</label>
+        <span id="hostingVersion"></span>
+      </div>
       <hr />
 
       <h6>.NET Core SDKs installed</h6>
@@ -56,13 +65,14 @@
       </ul>
 
       <hr />
-      
+
       <div class="downloads" style="width: 100%;">
         <div class="font-bolder">
           Install additional .NET Core runtimes or SDKs:
         </div>
         <a href="https://aka.ms/dotnet-download" target="_blank">dotnet Downloads...</a>
-      </div>
+      </div> -->
+      <pre id="sdk" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"></pre>
     </div>
     <script>
       require('./client-scripts/SDKInfoWindowEvents.js')
