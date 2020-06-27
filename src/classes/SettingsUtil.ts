@@ -1,13 +1,22 @@
 /// <reference types="electron-settings"/>
 import settings from 'electron-settings'
 import { Template } from '../models/Template'
+import { ConsoleTheme } from '../models/ConsoleTheme'
 
 export class SettingsUtil {
   private static favoritesPath: string = 'dotnetUISettings.Templates.Favorites'
+  private static consoleBackgroundColor: string = 'dotnetUISettings.Console.Background'
+  private static consoleForegroundColor: string = 'dotnetUISettings.Console.Foreground'
+  private static consoleTheme: string = 'dotnetUISettings.Console.Theme'
 
   public static ConfigureSettings(): void {
     if (!settings.has('dotnetUISettings')) {
       settings.set('dotnetUISettings', {
+        Console: {
+          Background: '',
+          Foreground: '',
+          Theme: '',
+        },
         Templates: {
           Favorites: [
           ],
@@ -45,10 +54,6 @@ export class SettingsUtil {
     return templates.filter(template => template.IsFavorite == true)
   }
 
-  public static UnloadFavoriteTemplateList(templatesArray: Template[]): void {
-
-  }
-
   public static RemoveFavoriteTemplate(template: Template): any {
     let favorites = <Array<any>>settings.get(SettingsUtil.favoritesPath)
 
@@ -58,5 +63,20 @@ export class SettingsUtil {
     }
     
     return null
+  }
+
+  public static GetConsoleTheme(theme: string, background: string, foreground: string): ConsoleTheme {
+    let consoleTheme = new ConsoleTheme()
+    consoleTheme.Background = SettingsUtil.consoleBackgroundColor
+    consoleTheme.ForeGround = SettingsUtil.consoleForegroundColor
+    consoleTheme.Name = SettingsUtil.consoleTheme
+
+    return consoleTheme
+  }
+
+  public static SetConsoleTheme(theme: string, background: string, foreground: string): void {
+    settings.set(SettingsUtil.consoleBackgroundColor, background)
+    settings.set(SettingsUtil.consoleForegroundColor, foreground)
+    settings.set(SettingsUtil.consoleTheme, theme)
   }
 }

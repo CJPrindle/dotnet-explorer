@@ -1,9 +1,9 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { Template } from '../models/Template'
-import { HtmlAttribute } from '../models/HtmlAttribute'
-import { DocumentModel } from '../client-scripts/DocumentModel'
-import { SettingsUtil } from './SettingsUtil'
+import { HtmlAttribute } from '../models/htmlAttribute'
+import { DocumentModel } from '../client-scripts/documentModel'
+import { SettingsUtil } from './settingsUtil'
 import { remote, BrowserWindow } from 'electron'
 
 export class Utilities {

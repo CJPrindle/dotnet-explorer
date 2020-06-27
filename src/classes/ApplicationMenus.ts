@@ -21,7 +21,7 @@ export class ApplicationMenus {
           { type: 'separator' },
           {
             label: 'Exit',
-            click: _ => app.quit(),
+            click: (_: any) => { return app.quit() },
             accelerator: 'Ctrl+F4'
           },
         ]

@@ -1,5 +1,5 @@
 
-import {HtmlAttribute} from '../models/HtmlAttribute';
+import {HtmlAttribute} from '../models/htmlAttribute';
 
 /**
  * @class 

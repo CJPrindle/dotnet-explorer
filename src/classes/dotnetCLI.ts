@@ -1,4 +1,4 @@
-import {ipcMain, ipcRenderer} from 'electron'
+import {ipcMain} from 'electron'
 import {spawn} from 'child_process'
 import {StringDecoder} from 'string_decoder'
 import {CommandHistory} from '../models/CommandHistory'

@@ -1,20 +1,36 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "lib": [ "es6", "dom" ],
-    "module": "commonjs",
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "declaration": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "listEmittedFiles": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "newLine": "LF",
     "noEmitOnError": true,
-    "noImplicitAny": false,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./bin",
     "pretty": true,
-    "removeComments": false,
-    "resolveJsonModule" : true,
-    "sourceMap": true,
-    "target": "es2018",
-    "esModuleInterop": true
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "strictNullChecks": false,
+    "target": "ES2020",
   },
-    "exclude": [
-      "node_modules",
-      "bin"
-    ]
+  "exclude": [
+    ".vscode",
+    "node_modules",
+    "bin"
+  ]
 }
