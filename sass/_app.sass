@@ -16,7 +16,7 @@ body
   box-sizing: border-box
   bottom: 0
   color: $application-foreground
-  font-family: HelveticaNeue,Quicksand, Muli, Avenir, Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Ubuntu, 'Segoe UI', sans-serif
+  font-family: Quicksand, Muli, Avenir, Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Ubuntu, 'Segoe UI', sans-serif
   font-feature-settings: 'liga'
   left: 0
   margin: 0
@@ -92,6 +92,16 @@ fieldset
 .align-right
   text-align: right
 
+.container
+  bottom: 0
+  left: 0
+  margin: 0
+  overflow-x: hidden
+  overflow-y: auto
+  position: absolute
+  right: 0
+  top: 0
+
 .divider
     background-color: transparent
     border-right: .5px $divider-border solid
@@ -141,15 +151,16 @@ fieldset
 .main-footer
   position: relative
 
-.container
-  bottom: 0
-  left: 0
-  margin: 0
-  overflow-x: hidden
-  overflow-y: auto
-  position: absolute
-  right: 0
-  top: 0
+.toolbar
+  align-content: center
+  border-bottom-color: darken($toolbar-border, 7)
+  border-radius: 4px
+  border-right-color: darken($toolbar-border, 7)
+  border: 1px solid $toolbar-border
+  display: inline-flex !important
+  margin: 5px
+  padding: 5px
+  width: auto
 
 ::selection
   background: $application-selection

@@ -23,6 +23,9 @@
         position: absolute
         right: 10px
 
+        .toolbar
+            background-color: lighten($fieldset-background, 1)
+
     hr
         left: 2px
         margin: 10px 0 10px 0
@@ -114,7 +117,7 @@
         display: grid
         grid-gap: 0
         grid-template-columns: 100px auto
-        grid-template-rows: 50px 50px 50px
+        grid-template-rows: 25p 50px 50px 50px
         padding: 2px
         position: relative
         width: 80%
@@ -126,21 +129,11 @@
             padding: 5px
     
     .project-location-container
-        display: inline-flex
+        display: inline-flex !important
         padding: 5px
         
         input
-            width: calc(100% - 38px)
-
-        button
-            cursor: pointer
-            padding: 0
-            position: absolute
-            right: 5px
-
-            img
-                height: 32px
-                width: 32px
+            width: calc(100% - 25px)
     
     .template-info-container
         display: inline-flex

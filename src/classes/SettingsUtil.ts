@@ -1,13 +1,15 @@
 /// <reference types="electron-settings"/>
-import settings from 'electron-settings'
-import { Template } from '../models/Template'
 import { ConsoleTheme } from '../models/ConsoleTheme'
+import { Template } from '../models/Template'
+import settings from 'electron-settings'
 
 export class SettingsUtil {
-  private static favoritesPath: string = 'dotnetUISettings.Templates.Favorites'
   private static consoleBackgroundColor: string = 'dotnetUISettings.Console.Background'
   private static consoleForegroundColor: string = 'dotnetUISettings.Console.Foreground'
   private static consoleTheme: string = 'dotnetUISettings.Console.Theme'
+  private static defaultEditor: string = 'dotnetUISettings.Projects.DefaultEditor'
+  private static defaultProjectLocation: string = 'dotnetUISettings.Projects.DefaultPath'
+  private static favoritesPath: string = 'dotnetUISettings.Templates.Favorites'
 
   public static ConfigureSettings(): void {
     if (!settings.has('dotnetUISettings')) {
@@ -22,6 +24,7 @@ export class SettingsUtil {
           ],
         },
         Projects: {
+          DefaultEditor: '',
           DefaultPath: '',
           Recent: [
             // The props below are for FYI only
@@ -65,7 +68,23 @@ export class SettingsUtil {
     return null
   }
 
-  public static GetConsoleTheme(theme: string, background: string, foreground: string): ConsoleTheme {
+  public static GetDefaultEditor(): string {
+    return settings.get(SettingsUtil.defaultEditor).toString()
+  }
+
+  public static SetDefaultEditor(path: string): void {
+    settings.set(SettingsUtil.defaultEditor, path)
+  }
+
+  public static GetDefaultProjectLocation(): string {
+    return settings.get(SettingsUtil.defaultProjectLocation).toString()
+  }
+
+  public static SetDefaultProjectLocation(path: string): void {
+    settings.set(SettingsUtil.defaultProjectLocation, path)
+  }
+
+  public static GetConsoleTheme(): ConsoleTheme {
     let consoleTheme = new ConsoleTheme()
     consoleTheme.Background = SettingsUtil.consoleBackgroundColor
     consoleTheme.ForeGround = SettingsUtil.consoleForegroundColor

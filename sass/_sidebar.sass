@@ -69,12 +69,15 @@
       outline: none
 
     li:hover
-      +li-hover-filter(brightness(133%))
       text-shadow: 0.33px 0.33px 2px $sidebar-title-foreground
+      +li-hover-filter(brightness(133%))
+     
 
   .get-templates-container
+    align-content: center
     background-color: $sidebar-title-background
     bottom: 0
+    display: inline-flex
     height: 25px
     left: 0
     padding-left: 20px
@@ -107,12 +110,14 @@
     border-bottom: 1px solid $sidebar-title-border
     border-top: 1px solid $sidebar-title-border
     color: $sidebar-title-foreground
-    font-size: 1.3em
-    font-weight: 700
+    font-size: 1.66em
+    font-weight: 600
     left: 0
-    padding-bottom: 10px
-    padding-left: 20px
-    padding-top: 5px
+    letter-spacing: .66px
+    padding-bottom: 5px
+    padding-left: 15px
+    padding-top: 10px
     position: absolute  
     right: 0
-    top: 0
+    text-shadow: 0.33px 0.33px 1px ghostwhite
+    top: -10px

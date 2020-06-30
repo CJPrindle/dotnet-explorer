@@ -33,8 +33,6 @@
   +button-hover-filter(brightness(110%))
   background-color: $button-hover-background
 
-.button-alert
-  background-color: $button-alert-background !important
 
 button
   @extend %button-center
@@ -53,4 +51,17 @@ button
 button:hover
   @extend %button-hover
 
+.button-alert
+  background-color: $button-alert-background !important
 
+.button-toolbar
+  align-content: center
+  display: inline-flex
+  margin-right: 2px
+  padding: 0
+  height: 24px
+  width: 24px
+
+  img
+    height: 100%
+    width: 100%

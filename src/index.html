@@ -1,199 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="stylesheets/main.css" />
-  </head>
 
-  <body>
-    <div class="main-container">
-      <div class="main-content">
-        <div class="main-content-left">
-          <div class="container">
-            <div class="activitybar">
-              <button id="projectTemplates" class="flat-button" title="Project Templates">
-                <img src="./assets/projects/project-template.png" />
-              </button>
-              <button id="itemTemplates" class="flat-button" title="Item Templates">
-                <img src="./assets/projects/item-template.png" />
-              </button>
-              <button id="sdkInfo" class="flat-button">
-                <img src="./assets/projects/project-netcore-test-32~dark.png" />
-              </button>
-              <button id="templatesConfig" class="flat-button">
-                <img src="./assets/projects/file-source-32~dark.png" />
-              </button>
-              <button id="templatesMisc" class="flat-button">
-                <img src="./assets/projects/solution-32~dark.png" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="main-content-right">
-          <div class="container">
-            
-            <div class="sidebar">
-              <div id="sidebarTitle" class="sidebar-title">
-                Templates
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="stylesheets/main.css" />
+</head>
 
-              <div class="sidebar-options-container">
-                  <div class="align-right">
-                    <label for="templateTypes">Type:</label>
-                  </div>
-                  <div>
-                    <select id="templateTypes" size="1">
-                      <option>Items</option>
-                      <option selected="true">Projects</option>
-                    </select>
-                  </div>
-                  <div class="align-right">
-                    <label for="viewFavorites">View Favorites:</label>
-                  </div>
-                  <div>
-                    <input id="viewFavorites" type="checkbox" />
-                  </div>
-              </div>
-              
-              <!-- <hr class="hr-top" /> -->
-              <ul id="sidebarItems"></ul>
-              <!-- <hr class="hr-bottom" /> -->
-              <div class="get-templates-container">
-                <a id="getTemplates" href="#">Get More Templates</a>
-              </div>
-            </div>
-
-            <div id="editor" class="editor">
-              <div class="template-info-container">
-                <img id="templateTitleIcon" class="template-title-icon" src="assets/templates/default.png" />
-                <div class="template-properties">
-                  <div id="templateTitleName" class="template-name">Template Name</div>
-                  <div>
-                    <span id="templateTitleShortName" class="template-shortname">ShortName</span>
-                    <span class="divider"></span>
-                    <span id="templateChips"></span>
-                  </div>
-                  <br />
-                  <div class="items-center" title="Check the box to mark this template as a favorite">
-                    <input id="favoriteTemplate" type="checkbox" />
-                    <label for="favoriteTemplate">Favorite</label>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <hr />
-              <br />
-              <fieldset>
-                <legend id="projectLegend">New Project</legend>
-                <form id="newProjectForm" onsubmit="return false">
-                  <div class="project-create-container">
-                    <!-- Row 1 / Col 1 -->
-                    <div class="align-right">
-                      <label for="projectName">Name:</label>
-                    </div>
-                    <!-- Row 1 / Col 2 -->
-                    <div>
-                      <input id="projectName" />
-                    </div>
-                    <!-- Row 2 / Col 1 -->
-                    <div class="align-right">
-                      <label for="projectLocation">Location:</label>
-                    </div>
-                    <!-- Row 2 / Col 2 -->
-                    <div class="project-location-container">
-                      <input id="projectLocation" />
-                      <button id="openFolderDialog" class="flat-button" >
-                        <img src="./assets/ellipsis-horizontal.png" />
-                      </button>
-                    </div>
-                    <!-- Row 3 / Col 1 -->
-                    <div class="align-right">
-                      <label for="projectLanguages">Language:</label>
-                    </div>
-                    <!-- Row 3 / Col 2 -->
-                    <div class="items-center">
-                      <select id="projectLanguages" size="1">
-                        <option>C#</option>
-                        <option>F#</option>
-                        <option>VB</option>
-                      </select>
-
-                      <input id="projectForce" type="checkbox" />
-                      <label
-                        for="projectForce"
-                        title="Forces content to be generated even if it would change existing files">
-                        &nbsp;Force&nbsp;
-                      </label>
-
-                      <input id="projectDryRun" type="checkbox" />
-                      <label
-                        for="projectDryRun"
-                        title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
-                        &nbsp;Dry Run&nbsp;
-                      </label>
-
-                      <input id="projectOpen" type="checkbox" />
-                      <label for="projectOpen">Open VS Code on completion</label>
-                    </div>
-                  </div>
-
-                  <div class="align-center">
-                    <button id="createProject" class="button-create-project">Create Project</button>
-                  </div>
-                  <a id="clearNewProjectForm" href="#" class="project-clear" title="Clear all form values">Clear Data</a>
-                </form>
-              </fieldset>
-
-              <div class="console-container">
-                <div class="console-titlebar">
-                  <label class="command-label">Output</label>
-
-                  <div class="console-events-container">
-                    <label for="consoleEvents">Events:&nbsp;</label>
-                    <select id="consoleEvents" size="1">
-                      <option></option>
-                    </select>
-                  </div>
-
-                  <div class="console-themes-container">
-                    <label for="consoleEvents">Themes:&nbsp;</label>
-                    <select id="consoleThemes" size="1">
-                      <option value="default">[Default]</option>
-                      <option value="grass">Grass</option>
-                      <option value="homebrew">Homebrew</option>
-                      <option value="manpages">Man Page</option>
-                      <option value="novel">Novel</option>
-                      <option value="ocean">Ocean</option>
-                      <option value="pro">Pro</option>
-                      <option value="redsands">Red Sands</option>
-                      <option value="silverspring">Silver Spring</option>
-                    </select>
-                  </div>
-                </div>
-                <div id="console" class="console">
-                  <pre id="consoleOutput"></pre>
-                </div>
-              </div>
-            </div>
+<body>
+  <div class="main-container">
+    <div class="main-content">
+      <div class="main-content-left">
+        <div class="container">
+          <div class="activitybar">
+            <button id="projectTemplates" class="flat-button" title="Project Templates">
+              <img src="./assets/projects/project-template.png" />
+            </button>
+            <button id="itemTemplates" class="flat-button" title="Item Templates">
+              <img src="./assets/projects/item-template.png" />
+            </button>
+            <button id="sdkInfo" class="flat-button">
+              <img src="./assets/projects/project-netcore-test-32~dark.png" />
+            </button>
+            <button id="templatesConfig" class="flat-button">
+              <img src="./assets/projects/file-source-32~dark.png" />
+            </button>
+            <button id="templatesMisc" class="flat-button">
+              <img src="./assets/projects/solution-32~dark.png" />
+            </button>
           </div>
         </div>
       </div>
-      <div class="main-footer">
+      <div class="main-content-right">
         <div class="container">
-          <div class="statusbar">
-            <div id="statusbar-col1">
-              <span>Welcome to dotnetUI</span>
+
+          <div class="sidebar">
+            <label id="sidebarTitle" class="sidebar-title">Templates</label>
+
+            <div class="sidebar-options-container">
+              <div class="align-right">
+                <label for="templateTypes">Type:</label>
+              </div>
+              <div>
+                <select id="templateTypes" size="1">
+                  <option>Items</option>
+                  <option selected="true">Projects</option>
+                </select>
+              </div>
+              <div class="align-right">
+                <label for="viewFavorites">View Favorites:</label>
+              </div>
+              <div>
+                <input id="viewFavorites" type="checkbox" />
+              </div>
+              <div class="get-templates-container">
+                <label for="getMoreTemplates"></label>
+                <button id="getMoreTemplates" class="button-toolbar" title="Browse for more templates">
+                  <img src="assets/template.png" />
+                </button>
+              </div>
             </div>
-            <div id="statusbar-col2"></div>
-            <div id="statusbar-col3"></div>
-            <div id="statusbar-col4"></div>
+
+            <ul id="sidebarItems"></ul>
+          </div>
+
+          <div id="editor" class="editor">
+            <div class="template-info-container">
+              <img id="templateTitleIcon" class="template-title-icon" src="assets/templates/default.png" />
+              <div class="template-properties">
+                <div id="templateTitleName" class="template-name">Template Name</div>
+                <div>
+                  <span id="templateTitleShortName" class="template-shortname">ShortName</span>
+                  <span class="divider"></span>
+                  <span id="templateChips"></span>
+                </div>
+                <br />
+                <div class="items-center" title="Check the box to mark this template as a favorite">
+                  <input id="favoriteTemplate" type="checkbox" />
+                  <label for="favoriteTemplate">Favorite</label>
+                </div>
+              </div>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <fieldset>
+              <legend id="projectLegend">New Project</legend>
+              <form id="newProjectForm" onsubmit="return false">
+                <div class="project-create-container">
+                  <!-- Row 1 -->
+                  <div>&nbsp;</div>
+
+                  <div class="toolbar">
+                    <button id="defaultProjectFolder" class="button-toolbar" title="Set the default project folder">
+                      <img src="assets/folder.png" />
+                    </button>
+                    <button id="clearNewProjectForm" class="button-toolbar" title="Reset form data">
+                      <img src="assets/reset.png" />
+                    </button>
+                    <button id="defaultEditor" class="button-toolbar"
+                      title="Set the default project editor application">
+                      <img src="assets/editor.png" />
+                    </button>
+                  </div>
+
+                  <!-- Row 2 -->
+                  <div class="align-right">
+                    <label for="projectName">Name:</label>
+                  </div>
+
+                  <div>
+                    <input id="projectName" />
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="align-right">
+                    <label for="projectLocation">Location:</label>
+                  </div>
+
+                  <div class="project-location-container">
+                    <input id="projectLocation" />
+                    <button id="projectFolder" class="button-toolbar">
+                      <img src="./assets/ellipsis-horizontal.png" />
+                    </button>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="align-right">
+                    <label for="projectLanguages">Language:</label>
+                  </div>
+
+                  <div class="items-center">
+                    <select id="projectLanguages" size="1">
+                      <option>C#</option>
+                      <option>F#</option>
+                      <option>VB</option>
+                    </select>
+
+                    <input id="projectForce" type="checkbox" />
+                    <label for="projectForce"
+                      title="Forces content to be generated even if it would change existing files">
+                      &nbsp;Force&nbsp;
+                    </label>
+
+                    <input id="projectDryRun" type="checkbox" />
+                    <label for="projectDryRun"
+                      title="Displays a summary of what would happen if the given command line were run if it would result in a template creation">
+                      &nbsp;Dry Run&nbsp;
+                    </label>
+
+                    <input id="projectOpen" type="checkbox" />
+                    <label for="projectOpen">Open VS Code on completion</label>
+                  </div>
+                </div>
+
+                <div class="align-center">
+                  <button id="createProject" class="button-create-project">Create Project</button>
+                </div>
+              </form>
+            </fieldset>
+
+            <div class="console-container">
+              <div class="console-titlebar">
+                <label class="command-label">Output</label>
+
+                <div class="console-events-container">
+                  <label for="consoleEvents">Events:&nbsp;</label>
+                  <select id="consoleEvents" size="1">
+                    <option></option>
+                  </select>
+                </div>
+
+                <div class="console-themes-container">
+                  <label for="consoleEvents">Themes:&nbsp;</label>
+                  <select id="consoleThemes" size="1">
+                    <option value="default">[Default]</option>
+                    <option value="grass">Grass</option>
+                    <option value="homebrew">Homebrew</option>
+                    <option value="manpages">Man Page</option>
+                    <option value="novel">Novel</option>
+                    <option value="ocean">Ocean</option>
+                    <option value="pro">Pro</option>
+                    <option value="redsands">Red Sands</option>
+                    <option value="silverspring">Silver Spring</option>
+                  </select>
+                </div>
+              </div>
+              <div id="console" class="console">
+                <pre id="consoleOutput"></pre>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <script>
-      require('./client-scripts/MainWindowEvents.js')
-      require('./client-scripts/documentModel.js')
-    </script>
-  </body>
+    <div class="main-footer">
+      <div class="container">
+        <div class="statusbar">
+          <div id="statusbar-col1">
+            <span>Welcome to dotnetUI</span>
+          </div>
+          <div id="statusbar-col2"></div>
+          <div id="statusbar-col3"></div>
+          <div id="statusbar-col4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    require('./client-scripts/MainWindowEvents.js')
+    require('./client-scripts/documentModel.js')
+  </script>
+</body>
+
 </html>

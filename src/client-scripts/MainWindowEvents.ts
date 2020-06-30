@@ -1,4 +1,4 @@
-import { ipcRenderer, OpenDialogOptions, OpenExternalOptions, remote, shell} from 'electron'
+import { ipcRenderer, OpenDialogOptions, OpenExternalOptions, remote } from 'electron'
 import { SettingsUtil } from '../classes/settingsUtil'
 import { Template } from '../models/Template'
 import { Utilities } from '../classes/utilities'
@@ -6,32 +6,34 @@ import * as path from 'path'
 
 
 window.addEventListener('DOMContentLoaded', _ => {
-  const openFolderDialog = <HTMLButtonElement>document.getElementById('openFolderDialog')
-  const createProject = <HTMLButtonElement>document.getElementById('createProject')
-  const clearNewProjectForm = <HTMLAnchorElement>document.getElementById('clearNewProjectForm')
+  const clearNewProjectForm = <HTMLButtonElement>document.getElementById('clearNewProjectForm')
   const consoleThemes = <HTMLSelectElement>document.getElementById('consoleThemes')
+  const createProject = <HTMLButtonElement>document.getElementById('createProject')
+  const defaultEditor = <HTMLButtonElement>document.getElementById('defaultEditor')
+  const defaultProjectFolder = <HTMLButtonElement>document.getElementById('defaultProjectFolder')
   const favoriteTemplate = <HTMLInputElement>document.getElementById('favoriteTemplate')
-  const getTemplates = <HTMLAnchorElement>document.getElementById('getTemplates')
+  const getMoreTemplates = <HTMLAnchorElement>document.getElementById('getMoreTemplates')
   const newProjectForm = <HTMLFormElement>document.getElementById('newProjectForm')
   const outputConsole = <HTMLDivElement>document.getElementById('console')
   const projectDryRun = <HTMLInputElement>document.getElementById('projectDryRun')
+  const projectFolder = <HTMLButtonElement>document.getElementById('projectFolder')
   const projectForce = <HTMLInputElement>document.getElementById('projectForce')
   const projectLanguages = <HTMLSelectElement>document.getElementById('projectLanguages')
   const projectLocation = <HTMLInputElement>document.getElementById('projectLocation')
   const projectName = <HTMLInputElement>document.getElementById('projectName')
   const projectOpen = <HTMLInputElement>document.getElementById('projectOpen')
-  const viewFavorites = <HTMLInputElement>document.getElementById('viewFavorites')
   const sdkInfo = <HTMLButtonElement>document.getElementById('sdkInfo')
-  
+  const viewFavorites = <HTMLInputElement>document.getElementById('viewFavorites')
+
   sdkInfo.addEventListener('click', () => {
     ipcRenderer.send('dotnet-info-click')
   })
 
   viewFavorites.addEventListener('click', () => {
-    if(viewFavorites.checked) {
+    if (viewFavorites.checked) {
       Utilities.LoadSidebarTemplates(
-         <Template[]>SettingsUtil.LoadFavoriteTemplateList(Utilities.CurrentTemplates),
-         false)
+        <Template[]>SettingsUtil.LoadFavoriteTemplateList(Utilities.CurrentTemplates),
+        false)
     }
     else {
       Utilities.LoadSidebarTemplates(
@@ -40,13 +42,12 @@ window.addEventListener('DOMContentLoaded', _ => {
   })
 
   favoriteTemplate.addEventListener('click', () => {
-    favoriteTemplate.checked 
+    favoriteTemplate.checked
       ? SettingsUtil.AddFavoriteTemplate(Utilities.CurrentTemplate)
       : SettingsUtil.RemoveFavoriteTemplate(Utilities.CurrentTemplate)
   })
 
   createProject.addEventListener('click', () => {
-    // Handles the creation of a new project
     const projectValues = {
       dryRun: projectDryRun.checked,
       force: projectForce.checked,
@@ -60,29 +61,50 @@ window.addEventListener('DOMContentLoaded', _ => {
     ipcRenderer.send('create-project-click', projectValues)
   })
 
-  // Clears the form elements when creating a new project
   clearNewProjectForm.addEventListener('click', () => {
     newProjectForm.reset()
   })
 
-  // Options for opening the dotnet template web site
-  let shellOptions: OpenExternalOptions = {
-    activate: true
-  }
-
-  // Launches a browser and navigates to the dotnet template website
-  getTemplates.addEventListener('click', (_: any) => {
-    shell.openExternal('https://dotnetnew.azurewebsites.net'),
-    shellOptions
+  getMoreTemplates.addEventListener('click', (_: any) => {
+    Utilities.OpenExternalWebSite('https://dotnetnew.azurewebsites.net', <OpenExternalOptions>{ activate: true, })
   })
- 
-  // Opens a dialog window for choosing a folder
-  openFolderDialog.addEventListener('click', (_: any) => {
-    // Options for opening the file selection dialog
+
+  defaultEditor.addEventListener('click', (_: any) => {
     const dialogOptions: OpenDialogOptions = {
-      title: "Set Project Location",
-      properties: ["openDirectory"],
-      message: "Select the location of your project",
+      defaultPath: SettingsUtil.GetDefaultEditor(),
+      title: 'Set Default Project Location',
+      properties: ['openFile'],
+      message: 'Select the default editor for your projects',
+    }
+
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions)
+      .then((data: any) => {
+        SettingsUtil.SetDefaultProjectLocation(projectLocation.value = data.filePaths.length > 0 ? data.filePaths[0] : '')
+      })
+  })
+
+  // Set the default project location
+  defaultProjectFolder.addEventListener('click', (_: any) => {
+    const dialogOptions: OpenDialogOptions = {
+      defaultPath: SettingsUtil.GetDefaultProjectLocation(),
+      title: 'Set Default Project Location',
+      properties: ['openDirectory'],
+      message: 'Select the default location for your projects',
+    }
+
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions)
+      .then((data: any) => {
+        SettingsUtil.SetDefaultProjectLocation(projectLocation.value = data.filePaths.length > 0 ? data.filePaths[0] : '')
+      })
+  })
+
+  // Set the project location
+  projectFolder.addEventListener('click', (_: any) => {
+    const dialogOptions: OpenDialogOptions = {
+      defaultPath: SettingsUtil.GetDefaultProjectLocation(),
+      title: 'Set Project Location',
+      properties: ['openDirectory'],
+      message: 'Select the location of your project',
     }
 
     remote.dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions)
@@ -97,30 +119,30 @@ window.addEventListener('DOMContentLoaded', _ => {
     let consoleForeground = ''
     let consoleTheme = ''
 
-    switch(consoleThemes.value) {
-      case "grass":
-        consoleBackground = "DarkGreen"
-        consoleForeground = "AntiqueWhite"
-        consoleTheme = "grass"
+    switch (consoleThemes.value) {
+      case 'grass':
+        consoleBackground = 'DarkGreen'
+        consoleForeground = 'AntiqueWhite'
+        consoleTheme = 'grass'
         break
-      case "manpages":
-        consoleBackground = "PaleGoldenRod"
-        consoleForeground = "black"
-        consoleTheme = "manpages"
+      case 'manpages':
+        consoleBackground = 'PaleGoldenRod'
+        consoleForeground = 'black'
+        consoleTheme = 'manpages'
         break
-      case "novel":
-        consoleBackground = "NavajoWhite"
-        consoleForeground = "brown"
-        consoleTheme = "novel"
+      case 'novel':
+        consoleBackground = 'NavajoWhite'
+        consoleForeground = 'brown'
+        consoleTheme = 'novel'
         break
-      case "redsands":
-        consoleBackground = "DarkRed"
-        consoleForeground = "LemonChiffon"
-        consoleTheme = "redsands"
-        break  
+      case 'redsands':
+        consoleBackground = 'DarkRed'
+        consoleForeground = 'LemonChiffon'
+        consoleTheme = 'redsands'
+        break
       default:
-        consoleBackground = ""
-        consoleForeground = ""
+        consoleBackground = ''
+        consoleForeground = ''
     }
 
     outputConsole.style.backgroundColor = consoleBackground

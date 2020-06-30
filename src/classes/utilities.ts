@@ -4,7 +4,7 @@ import { Template } from '../models/Template'
 import { HtmlAttribute } from '../models/htmlAttribute'
 import { DocumentModel } from '../client-scripts/documentModel'
 import { SettingsUtil } from './settingsUtil'
-import { remote, BrowserWindow } from 'electron'
+import { remote, BrowserWindow, OpenExternalOptions, shell } from 'electron'
 
 export class Utilities {
   public static CurrentTemplates : Template[]
@@ -120,5 +120,9 @@ export class Utilities {
         nativeWindowOpen: false
       }
     })
+  }
+
+  public static OpenExternalWebSite(url: string, options: OpenExternalOptions): void {
+    shell.openExternal(url, options)
   }
 }
